@@ -17,8 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BombermanGame extends Application {
-    public static final int WIDTH = 30;
-    public static final int HEIGHT = 20;
+    public static final int WIDTH = 25;
+    public static final int HEIGHT = 15;
     public List<Entity> Obj = new ArrayList<>();
     public static character bomberman;
     private GraphicsContext gc;
@@ -26,33 +26,20 @@ public class BombermanGame extends Application {
     private final List<Entity> entities = new ArrayList<>();
 
     public static void main(String[] args) {
-        launch(args);
+
+        Application.launch(BombermanGame.class);
     }
 
     @Override
     public void start(Stage Stage) throws Exception {
         canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
+
         gc = canvas.getGraphicsContext2D();
         // Tao root container
         Group root = new Group();
         root.getChildren().add(canvas);
 
         Scene scene = new Scene(root);
-
-        Stage.setScene(scene);
-        Stage.setTitle("BomberGame");
-        Stage.show();
-
-        AnimationTimer time = new AnimationTimer() {
-            @Override
-            public void handle(long l) {
-                render();
-                update();
-            }
-        };
-        time.start();
-        createMap();
-        bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
         scene.setOnKeyPressed(event -> {
             if (true) {
                 switch (event.getCode()) {
@@ -72,7 +59,22 @@ public class BombermanGame extends Application {
                 }
             }
         });
-        entities.add(bomberman);
+        Stage.setScene(scene);
+        Stage.setTitle("BomberGame");
+        Stage.show();
+        System.currentTimeMillis();
+        AnimationTimer time = new AnimationTimer() {
+            @Override
+            public void handle(long l) {
+                render();
+                update();
+            }
+        };
+        time.start();
+        createMap();
+        bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
+
+        //entities.add(bomberman);
 
 
 
@@ -93,6 +95,7 @@ public class BombermanGame extends Application {
     }
 
     public void update() {
+        //bomberman.render(gc);
         entities.forEach(Entity::update);
         bomberman.setCountRun(bomberman.getCountRun() + 1);
         if (bomberman.getCountRun() == 4) {
@@ -105,7 +108,8 @@ public class BombermanGame extends Application {
     public void render() {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         Obj.forEach(g -> g.render(gc));
-        entities.forEach(g -> g.render(gc));
+        //entities.forEach(g -> g.render(gc));
+        bomberman.render(gc);
     }
 }
 
