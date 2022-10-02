@@ -58,6 +58,10 @@ public abstract class character extends Entity {
     public void update() {
 
     }
+
+    public boolean isLife() {
+        return true;
+    }
 }
 
 
