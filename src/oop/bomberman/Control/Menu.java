@@ -17,7 +17,7 @@ import static oop.bomberman.BombermanGame.isPause;
 public class Menu {
     private static ImageView statusGame;
     public static Text level, bomb, time;
-    public static int bomb_number = 20, time_number = 120;   // the number of bomb is 20 and the time limit is 120 seconds
+    public static int bomb_number = 20, time_number = 120;
     public static Image pauseGame, playGame;
 
     public static void createMenu(Group root) { //Create a menu
