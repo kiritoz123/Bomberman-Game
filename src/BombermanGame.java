@@ -7,6 +7,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
 import oop.bomberman.Control.Move;
 import oop.bomberman.entities.Entity;
+import oop.bomberman.entities.EntityList;
 import oop.bomberman.entities.block.Grass;
 import oop.bomberman.entities.block.Wall;
 import oop.bomberman.entities.character.Bomber;
@@ -16,9 +17,15 @@ import oop.bomberman.graphics.Sprite;
 import java.util.ArrayList;
 import java.util.List;
 
+import static oop.bomberman.entities.EntityList.block;
+import static oop.bomberman.graphics.CreateMap.createMapLevel;
+
+
 public class BombermanGame extends Application {
+    public static final int animation = 3;
     public static final int WIDTH = 25;
     public static final int HEIGHT = 15;
+
     public List<Entity> Obj = new ArrayList<>();
     public static character bomberman;
     private GraphicsContext gc;
@@ -59,6 +66,7 @@ public class BombermanGame extends Application {
                 }
             }
         });
+
         Stage.setScene(scene);
         Stage.setTitle("BomberGame");
         Stage.show();
@@ -71,7 +79,7 @@ public class BombermanGame extends Application {
             }
         };
         time.start();
-        createMap();
+        createMapLevel(1);
         bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
 
         //entities.add(bomberman);
@@ -96,9 +104,10 @@ public class BombermanGame extends Application {
 
     public void update() {
         //bomberman.render(gc);
+        //block.forEach(block::update);
         entities.forEach(Entity::update);
         bomberman.setCountRun(bomberman.getCountRun() + 1);
-        if (bomberman.getCountRun() == 4) {
+        if (bomberman.getCountRun() == animation) {
             Move.checkRun(bomberman);
             bomberman.setCountRun(0);
         }
@@ -107,7 +116,8 @@ public class BombermanGame extends Application {
 
     public void render() {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        Obj.forEach(g -> g.render(gc));
+        //Obj.forEach(g -> g.render(gc));
+        block.forEach(g -> g.render(gc));
         //entities.forEach(g -> g.render(gc));
         bomberman.render(gc);
     }
