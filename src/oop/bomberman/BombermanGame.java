@@ -1,3 +1,5 @@
+package oop.bomberman;
+
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Group;
@@ -28,6 +30,8 @@ public class BombermanGame extends Application {
 
     public List<Entity> Obj = new ArrayList<>();
     public static character bomberman;
+    public static boolean Run;
+    public static boolean isPause;
     private GraphicsContext gc;
     private Canvas canvas;
     private final List<Entity> entities = new ArrayList<>();
@@ -50,19 +54,10 @@ public class BombermanGame extends Application {
         scene.setOnKeyPressed(event -> {
             if (true) {
                 switch (event.getCode()) {
-                    case UP:
-                        Move.up(bomberman);
-                        break;
-                    case DOWN:
-                        Move.down(bomberman);
-                        break;
-                    case RIGHT:
-                        Move.right(bomberman);
-                        break;
-                    case LEFT:
-                        Move.left(bomberman);
-                        break;
-
+                    case UP -> Move.up(bomberman);
+                    case DOWN -> Move.down(bomberman);
+                    case RIGHT -> Move.right(bomberman);
+                    case LEFT -> Move.left(bomberman);
                 }
             }
         });

@@ -13,25 +13,22 @@ public class Move {
     }
     public static void setDirection(String direction,character chars,int isMove) {
         switch (direction) {
-            case "down":
+            case "down" -> {
                 down_step(chars);
                 chars.setY(chars.getY() + isMove);
-                break;
-            case "up":
+            }
+            case "up" -> {
                 up_step(chars);
                 chars.setY(chars.getY() - isMove);
-                break;
-            case "left":
+            }
+            case "left" -> {
                 left_step(chars);
                 chars.setX(chars.getX() - isMove);
-                break;
-            case "right":
+            }
+            case "right" -> {
                 right_step(chars);
                 chars.setX(chars.getX() + isMove);
-
-
-                break;
-
+            }
         }
     }
     public static void down(character chars) {
