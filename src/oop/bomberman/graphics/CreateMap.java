@@ -1,6 +1,5 @@
 package oop.bomberman.graphics;
 
-import oop.bomberman.entities.Entity;
 import oop.bomberman.entities.EntityList;
 import oop.bomberman.entities.block.Brick;
 import oop.bomberman.entities.block.Grass;
@@ -9,8 +8,6 @@ import oop.bomberman.entities.block.Wall;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-
-import static oop.bomberman.BombermanGame.*;
 
 public class CreateMap {
     public static int WIDTHMAP = 30;
@@ -71,28 +68,5 @@ public class CreateMap {
         }
     }
 
-    public static void update() {
-        if (bomberman.getX() > 350 && right && EntityList.block.get(29).getX() >= 800) {
-            MoveRight();
-        }
-        if (EntityList.block.get(0).getX() < 0 && left) {
-            MoveLeft();
-        }
-    }
-
-    private static void MoveRight() {
-        int distance = 16;
-        for (Entity entity : EntityList.block) {
-            entity.setX(entity.getX() - distance);
-        }
-
-    }
-
-    private static void MoveLeft() {
-        int distance = 16;
-        for (Entity entity : EntityList.block) {
-            entity.setX(entity.getX() + distance);
-        }
-    }
 
 }

@@ -2,65 +2,61 @@ package oop.bomberman.entities.character;
 
 import javafx.scene.image.Image;
 import oop.bomberman.entities.Entity;
+
 public abstract class character extends Entity {
 
-    protected int swap;
-    protected String direction;
-    protected int count;
-    protected int countRun;
-   
+    protected final int MAX_ANIMATE = 7500; //save the animation status
+    protected int animate = 0;
+    protected int X = x;
+    protected int Y = y;
+    protected int speed;
+    protected int left = 0;
+    protected int right = 0;
+    protected int up = 0;
+    protected int down = 0;
 
-    public character(int x_unit, int y_unit, Image img) {
-        super(x_unit, y_unit, img);
-    }
-
-    public character() {
-
-    }
-
-
-
-    public int getSwap() {
-        return swap;
-    }
-
-    public void setSwap(int swap) {
-        this.swap = swap;
-    }
-
-    public String getDirection() {
-        return direction;
-    }
-
-    public void setDirection(String direction) {
-        this.direction = direction;
-    }
-
-    public int getCount() {
-        return count;
-    }
-
-    public void setCount(int count) {
-        this.count = count;
-    }
-
-    public int getCountRun() {
-        return countRun;
-    }
-
-    public void setCountRun(int countRun) {
-        this.countRun = countRun;
-    }
-
-
-
-    @Override
-    public void update() {
+    public character(int xUnit, int yUnit, Image img) {
+        super(xUnit, yUnit, img);
 
     }
 
-    public boolean isLife() {
-        return true;
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
+    public void goLeft() {
+        X = x - speed;
+    }
+
+    public void goRight() {
+        X = x + speed;
+    }
+
+    public void goUp() {
+        Y = y - speed;
+    }
+
+    public void goDown() {
+        Y = y + speed;
+    }
+
+    public void move() {
+        x = X;
+        y = Y;
+    }
+
+    public void stay() {
+        X = x;
+        Y = y;
+    }
+
+
+    protected void animate() {
+        if (animate < MAX_ANIMATE) {
+            animate++;
+        } else {
+            animate = 0; //reset animation
+        }
     }
 }
 
