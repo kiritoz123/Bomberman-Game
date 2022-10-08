@@ -29,6 +29,7 @@ public class BombermanGame extends Application {
     public static final int HEIGHT = 15;
 
     public List<Entity> Obj = new ArrayList<>();
+    public static int[][] list_kill;
     public static character bomberman;
     public static boolean Run;
     public static boolean isPause;
