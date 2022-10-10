@@ -8,15 +8,17 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
 import oop.bomberman.entities.Entity;
+import oop.bomberman.entities.block.Bomb;
 import oop.bomberman.entities.block.Grass;
 import oop.bomberman.entities.block.Wall;
 import oop.bomberman.entities.character.Bomber;
 import oop.bomberman.graphics.Sprite;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static oop.bomberman.entities.EntityList.block;
+import static oop.bomberman.entities.EntityList.*;
 import static oop.bomberman.graphics.CreateMap.createMapLevel;
 
 
@@ -25,8 +27,8 @@ public class BombermanGame extends Application {
     public static final int animation = 3;
     public static final int WIDTH = 25;
     public static final int HEIGHT = 15;
-    public static boolean right;
-    public static boolean left;
+    public static boolean Bright;
+    public static boolean Bleft;
     public static Bomber bomberman;
     public static boolean Run;
     public static boolean isPause;
@@ -75,7 +77,7 @@ public class BombermanGame extends Application {
         scene.setOnKeyPressed(event -> {
             bomberman.handleKeyPressedEvent(event.getCode());
         });
-        bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
+        bomberman = new Bomber(1, 1, Sprite.player2_right.getFxImage());
 
         scene.setOnKeyReleased(event -> bomberman.handleKeyReleasedEvent(event.getCode()));
     }
@@ -99,30 +101,66 @@ public class BombermanGame extends Application {
 
     public void update() {
         //bomberman.render(gc);
-        entities.forEach(Entity::update);
+        //entities.forEach(Entity::update);
         //block.forEach(block::update);
 
         //CreateMap.update();
+        for (int i = 0; i < flame.size(); i++) {
+            flame.get(i).update();
+        }
+
         bomberman.update();
-        bomberman.move();
+        for (Bomb bomb : bombs) {
+            bomb.update();
+        }
+
+        for (int i = 0; i < block.size(); i++) {
+            block.get(i).update();
+        }
+        handleCollisions();
+        /*for (int i = 0; i < flame.size(); i ++) {
+            flame.get(i).update();
+        }
+        bomberman.update();
+        handleCollisions();
+        for(int i=0; i<bombs.size(); i++) {
+            bombs.get(i).update();
+        }
+        /*CreateMap.update();
+        Bright = false;
+        Bleft = false;*/
 
     }
 
     public void render() {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         //grasses.forEach(g->g.render(gc));
-        //for(int i=0;i<walls.size();i++) {
-        // walls.get(i).render(gc);
-        //}
+        block.forEach(g -> g.render(gc));
         //walls.forEach(g->g.render(gc));
         //grasses.forEach(g->g.render(gc));
         //bricks.forEach(g->g.render(gc));
-        block.forEach(g -> g.render(gc));
 
-
+        bombs.forEach(g -> g.render(gc));
         bomberman.render(gc);
+        flame.forEach(g -> g.render(gc));
 
 
+    }
+
+    public void handleCollisions() {
+        Rectangle r1 = bomberman.getBounds();
+        //Bomber vs StillObjects
+        for (Entity block : block) {
+            Rectangle r2 = block.getBounds();
+            if (r2.intersects(r1)) {
+                if (bomberman.getLayer() >= block.getLayer()) {
+                    bomberman.move();
+                } else {
+                    bomberman.stay();
+                }
+                break;
+            }
+        }
     }
 
 

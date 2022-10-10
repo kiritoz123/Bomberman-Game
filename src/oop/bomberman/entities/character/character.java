@@ -2,22 +2,20 @@ package oop.bomberman.entities.character;
 
 import javafx.scene.image.Image;
 import oop.bomberman.entities.Entity;
+import oop.bomberman.graphics.Sprite;
+
+import java.awt.*;
 
 public abstract class character extends Entity {
 
     protected final int MAX_ANIMATE = 7500; //save the animation status
     protected int animate = 0;
-    protected int X = x;
-    protected int Y = y;
+    protected int X;
+    protected int Y;
     protected int speed;
-    protected int left = 0;
-    protected int right = 0;
-    protected int up = 0;
-    protected int down = 0;
 
     public character(int xUnit, int yUnit, Image img) {
         super(xUnit, yUnit, img);
-
     }
 
     public void setSpeed(int speed) {
@@ -49,9 +47,11 @@ public abstract class character extends Entity {
         X = x;
         Y = y;
     }
+    public Rectangle getBounds() {
+        return new Rectangle(X, Y, Sprite.SCALED_SIZE, Sprite.SCALED_SIZE);
+    }
 
-
-    protected void animate() {
+    protected void animated() {
         if (animate < MAX_ANIMATE) {
             animate++;
         } else {

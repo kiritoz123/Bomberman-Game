@@ -1,15 +1,23 @@
 package oop.bomberman.graphics;
 
+import oop.bomberman.BombermanGame;
+import oop.bomberman.entities.Entity;
 import oop.bomberman.entities.EntityList;
 import oop.bomberman.entities.block.Brick;
 import oop.bomberman.entities.block.Grass;
 import oop.bomberman.entities.block.Wall;
+import oop.bomberman.level.Layer;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
+import static oop.bomberman.BombermanGame.*;
+import static oop.bomberman.entities.EntityList.block;
+
 public class CreateMap {
+    public static int mapStartX = 0;// Coordinates of Map relative to Window.
+    public static int mapStartY = 0;
     public static int WIDTHMAP = 30;
     public static int HEIGHTMAP = 15;
 
@@ -49,24 +57,23 @@ public class CreateMap {
                 switch (gird[i][j]) {
 
                     case 0:
-                        EntityList.block.add(new Wall(j, i, Sprite.wall.getFxImage()));
-                        EntityList.block.add(new Grass(j, i, Sprite.grass.getFxImage()));
+                        block.add(new Grass(j, i, Sprite.grass.getFxImage()));
+
                         //EntityList.block.add(new Wall(j,i,Sprite.wall.getFxImage()));
                         break;
                     case 2:
-                        EntityList.block.add(new Wall(j, i, Sprite.wall.getFxImage()));
+                        block.add(new Wall(j, i, Sprite.wall.getFxImage()));
                         break;
                     case 1:
-                        EntityList.block.add(new Brick(j, i, Sprite.brick.getFxImage()));
+                        //EntityList.block.add(new Grass(j, i, Sprite.grass.getFxImage()));
+                        block.add(new Brick(j, i, Sprite.brick.getFxImage()));
                         break;
-                    default:
-                        EntityList.block.add(new Grass(j, i, Sprite.grass.getFxImage()));
+
 
                 }
-                //EntityList.block.add(new Grass(j,i,Sprite.grass.getFxImage()));
+                block.sort(new Layer());
             }
         }
     }
-
 
 }
