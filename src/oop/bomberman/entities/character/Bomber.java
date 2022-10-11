@@ -8,8 +8,7 @@ import oop.bomberman.graphics.Sprite;
 
 import java.awt.*;
 
-import static oop.bomberman.BombermanGame.Bleft;
-import static oop.bomberman.BombermanGame.Bright;
+import static oop.bomberman.BombermanGame.*;
 import static oop.bomberman.entities.EntityList.bombs;
 
 
@@ -19,7 +18,7 @@ public class Bomber extends character {
     private boolean placeBomb = false;
     //private final List<Bomb> bombs = new ArrayList<>();
     private KeyCode direction = null;
-    private final int time = 0;
+    private  int time = 0;
     private int radius;
     private int power;
 
@@ -69,8 +68,16 @@ public class Bomber extends character {
                 countBomb++;
             }
         }
-        animated();
 
+        if(!alive) {
+            time++;
+            img = Sprite.movingSprite(Sprite.player2_dead1, Sprite.player2_dead2,
+                    Sprite.player2_dead3, animate++, 20).getFxImage();
+            if(time > 30) {
+                bomberman = new Bomber(1, 1, Sprite.player2_right.getFxImage());
+            }
+        }
+        animated();
     }
 
     public void handleKeyPressedEvent(KeyCode keyCode) {

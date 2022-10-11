@@ -9,9 +9,12 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
 import oop.bomberman.entities.Entity;
 import oop.bomberman.entities.block.Bomb;
+import oop.bomberman.entities.block.Flame;
 import oop.bomberman.entities.block.Grass;
 import oop.bomberman.entities.block.Wall;
 import oop.bomberman.entities.character.Bomber;
+import oop.bomberman.entities.character.enemy.Balloom;
+import oop.bomberman.entities.character.enemy.Enemy;
 import oop.bomberman.graphics.Sprite;
 
 import java.awt.*;
@@ -78,7 +81,8 @@ public class BombermanGame extends Application {
             bomberman.handleKeyPressedEvent(event.getCode());
         });
         bomberman = new Bomber(1, 1, Sprite.player2_right.getFxImage());
-
+        Balloom ball = new Balloom(10, 9, Sprite.balloom_dead.getFxImage());
+        enemies.add(ball);
         scene.setOnKeyReleased(event -> bomberman.handleKeyReleasedEvent(event.getCode()));
     }
 
@@ -113,11 +117,15 @@ public class BombermanGame extends Application {
         for (Bomb bomb : bombs) {
             bomb.update();
         }
-
+        for (Enemy e : enemies) {
+            e.update();
+        }
         for (int i = 0; i < block.size(); i++) {
             block.get(i).update();
         }
         handleCollisions();
+        collisionFlame();
+
         /*for (int i = 0; i < flame.size(); i ++) {
             flame.get(i).update();
         }
@@ -141,8 +149,10 @@ public class BombermanGame extends Application {
         //bricks.forEach(g->g.render(gc));
 
         bombs.forEach(g -> g.render(gc));
-        bomberman.render(gc);
+
+        enemies.forEach(g -> g.render(gc));
         flame.forEach(g -> g.render(gc));
+        bomberman.render(gc);
 
 
     }
@@ -159,6 +169,33 @@ public class BombermanGame extends Application {
                     bomberman.stay();
                 }
                 break;
+            }
+            for (Enemy e : enemies) {
+                Rectangle Rec1 = e.getBounds();
+                if (r2.intersects(Rec1)) {
+                    if (e.getLayer() >= block.getLayer()) {
+                        e.move();
+                    } else e.stay();
+                    break;
+                }
+            }
+        }
+
+    }
+
+    public void collisionFlame() {
+        for (Flame flame : flame) {
+            Rectangle r1 = flame.getBounds();
+            Rectangle rec = bomberman.getBounds();
+            for (Enemy enemy : enemies) {
+                Rectangle r2 = enemy.getBounds();
+                if (r1.intersects(r2)) {
+                    enemy.setAlive(false);
+
+                }
+            }
+            if(r1.intersects(rec)) {
+                bomberman.setAlive(false);
             }
         }
     }
