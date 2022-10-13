@@ -71,10 +71,10 @@ public class Bomber extends character {
 
         if(!alive) {
             time++;
-            img = Sprite.movingSprite(Sprite.player2_dead1, Sprite.player2_dead2,
-                    Sprite.player2_dead3, animate++, 20).getFxImage();
+            img = Sprite.movingSprite(Sprite.player_dead1, Sprite.player_dead2,
+                    Sprite.player_dead3, animate++, 20).getFxImage();
             if(time > 30) {
-                bomberman = new Bomber(1, 1, Sprite.player2_right.getFxImage());
+                bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
             }
         }
         animated();
@@ -95,18 +95,18 @@ public class Bomber extends character {
     public void handleKeyReleasedEvent(KeyCode keyCode) {
         if (direction == keyCode) {
             if (direction == KeyCode.LEFT || direction == KeyCode.A) {
-                img = Sprite.player2_left.getFxImage();
+                img = Sprite.player_left.getFxImage();
                 Bleft = true;
             }
             if (direction == KeyCode.RIGHT || direction == KeyCode.D) {
-                img = Sprite.player2_right.getFxImage();
+                img = Sprite.player_right.getFxImage();
                 Bright = true;
             }
             if (direction == KeyCode.UP || direction == KeyCode.W) {
-                img = Sprite.player2_up.getFxImage();
+                img = Sprite.player_up.getFxImage();
             }
             if (direction == KeyCode.DOWN || direction == KeyCode.S) {
-                img = Sprite.player2_down.getFxImage();
+                img = Sprite.player_down.getFxImage();
             }
             direction = null;
         }
@@ -117,25 +117,25 @@ public class Bomber extends character {
 
     public void goLeft() {
         super.goLeft();
-        img = Sprite.movingSprite(Sprite.player2_left, Sprite.player2_left_1, Sprite.player2_left_2, animate++, 20).getFxImage();
+        img = Sprite.movingSprite(Sprite.player_left, Sprite.player_left_1, Sprite.player_left_2, animate++, 20).getFxImage();
 
     }
 
     public void goRight() {
         super.goRight();
-        img = Sprite.movingSprite(Sprite.player2_right, Sprite.player2_right_1, Sprite.player2_right_2, animate++, 20).getFxImage();
+        img = Sprite.movingSprite(Sprite.player_right, Sprite.player_right_1, Sprite.player_right_2, animate++, 20).getFxImage();
 
     }
 
     public void goUp() {
         super.goUp();
-        img = Sprite.movingSprite(Sprite.player2_up, Sprite.player2_up_2, Sprite.player2_up_2, animate++, 20).getFxImage();
+        img = Sprite.movingSprite(Sprite.player_up, Sprite.player_up_2, Sprite.player_up_2, animate++, 20).getFxImage();
 
     }
 
     public void goDown() {
         super.goDown();
-        img = Sprite.movingSprite(Sprite.player2_down, Sprite.player2_down_1, Sprite.player2_down_2, animate++, 20).getFxImage();
+        img = Sprite.movingSprite(Sprite.player_down, Sprite.player_down_1, Sprite.player_down_2, animate++, 20).getFxImage();
     }
 
     //

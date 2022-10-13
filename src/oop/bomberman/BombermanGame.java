@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
+import oop.bomberman.Control.menu;
 import oop.bomberman.entities.Entity;
 import oop.bomberman.entities.block.Bomb;
 import oop.bomberman.entities.block.Flame;
@@ -21,6 +22,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static oop.bomberman.Control.menu.updateMenu;
 import static oop.bomberman.entities.EntityList.*;
 import static oop.bomberman.graphics.CreateMap.createMapLevel;
 
@@ -33,7 +35,7 @@ public class BombermanGame extends Application {
     public static boolean Bright;
     public static boolean Bleft;
     public static Bomber bomberman;
-    public static boolean Run;
+    public static boolean Run=true;
     public static boolean isPause;
     private final List<Entity> entities = new ArrayList<>();
     public List<Entity> Obj = new ArrayList<>();
@@ -48,11 +50,12 @@ public class BombermanGame extends Application {
     @Override
     public void start(Stage Stage) throws Exception {
         canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
-
+        canvas.setTranslateY(32);
         gc = canvas.getGraphicsContext2D();
         // Tao root container
         Group root = new Group();
         root.getChildren().add(canvas);
+        menu.createMenu(root);
         //Pane pane = createBackground();
 
 
@@ -69,9 +72,11 @@ public class BombermanGame extends Application {
         AnimationTimer time = new AnimationTimer() {
             @Override
             public void handle(long l) {
-
                 render();
-                update();
+                if(isPause){
+                    update();
+                    //time();
+                }
             }
         };
         time.start();
@@ -80,7 +85,7 @@ public class BombermanGame extends Application {
         scene.setOnKeyPressed(event -> {
             bomberman.handleKeyPressedEvent(event.getCode());
         });
-        bomberman = new Bomber(1, 1, Sprite.player2_right.getFxImage());
+        bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
         Balloom ball = new Balloom(10, 9, Sprite.balloom_dead.getFxImage());
         enemies.add(ball);
         scene.setOnKeyReleased(event -> bomberman.handleKeyReleasedEvent(event.getCode()));
