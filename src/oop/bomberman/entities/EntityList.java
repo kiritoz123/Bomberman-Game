@@ -14,7 +14,7 @@ public class EntityList {
     public static final List<Flame> flame = new ArrayList<>();
     public static final List<Enemy> enemies = new ArrayList<>();
     public static List<Bomb> bombs = new ArrayList<>();
-    public static Bomber bomberman;
+    //public static Bomber bomberman;
 
     public static void clearList() {
         block.clear();

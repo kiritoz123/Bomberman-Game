@@ -8,7 +8,7 @@ import java.util.Random;
 import static oop.bomberman.entities.EntityList.enemies;
 
 public class Balloom extends Enemy {
-    private int move;
+
     public Balloom(int xUnit, int yUnit, Image img) {
         super(xUnit, yUnit, img);
         setLayer(1);
@@ -43,6 +43,16 @@ public class Balloom extends Enemy {
         }
 
     }
+    public static void createBalloon() {
+        Random rand = new Random();
+        Balloom e1 = new Balloom(rand.nextInt(24) + 1, rand.nextInt(14)+1,Sprite.balloom_dead.getFxImage());
+        Balloom e2 = new Balloom(rand.nextInt(24) + 1, rand.nextInt(14)+1,Sprite.balloom_dead.getFxImage());
+        Balloom e3 = new Balloom(rand.nextInt(24) + 1, rand.nextInt(14)+1,Sprite.balloom_dead.getFxImage());
+        enemies.add(e1);
+        enemies.add(e2);
+        enemies.add(e3);
+    }
+
 
     @Override
     public void goLeft() {
