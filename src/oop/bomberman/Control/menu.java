@@ -12,7 +12,7 @@ import oop.bomberman.level.FileLevel;
 
 import static oop.bomberman.BombermanGame.*;
 
-public class Menu {
+public class menu {
     public static ImageView statusGame, author_view;
     public static Text level, bomb, time;
     public static int bomb_number = 20;
@@ -63,7 +63,7 @@ public class Menu {
 
         statusGame.setOnMouseClicked(event -> {
             root.getChildren().remove(author_view);
-            if (bomberman.isLife()) {
+            if (bomberman.isAlive()) {
                 isPause = !isPause;
             } else {
                 new FileLevel();
@@ -77,8 +77,8 @@ public class Menu {
         level.setText("Level: "  );
         bomb.setText("Bombs: " + bomb_number);
 
-        if (bomberman.isLife())
-            if (isPause) {
+        if (bomberman.isAlive())
+            if (!isPause) {
                 statusGame.setImage(pauseGame);
             } else {
                 statusGame.setImage(playGame);
@@ -89,4 +89,7 @@ public class Menu {
         }
     }
 }
+
+
+
 

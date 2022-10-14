@@ -25,9 +25,12 @@ public class Sprite {
     | Board sprites
     |--------------------------------------------------------------------------
      */
-    public static Sprite grass = new Sprite(DEFAULT_SIZE, 6, 0, SpriteSheet.tiles, 16, 16);
-    public static Sprite brick = new Sprite(DEFAULT_SIZE, 7, 0, SpriteSheet.tiles, 16, 16);
-    public static Sprite wall = new Sprite(DEFAULT_SIZE, 5, 0, SpriteSheet.tiles, 16, 16);
+    //public static Sprite grass = new Sprite(DEFAULT_SIZE, 6, 0, SpriteSheet.tiles, 16, 16);
+    //public static Sprite brick = new Sprite(DEFAULT_SIZE, 7, 0, SpriteSheet.tiles, 16, 16);
+    //public static Sprite wall = new Sprite(DEFAULT_SIZE, 5, 0, SpriteSheet.tiles, 16, 16);
+    public static Sprite wall = new Sprite(DEFAULT_SIZE, 0, 2, SpriteSheet.player, 16, 16);
+    public static Sprite brick = new Sprite(DEFAULT_SIZE, 2, 2, SpriteSheet.player, 16, 16);
+    public static Sprite grass = new Sprite(DEFAULT_SIZE, 1, 2, SpriteSheet.player, 16, 16);
     public static Sprite portal = new Sprite(DEFAULT_SIZE, 4, 0, SpriteSheet.tiles, 14, 14);
 
     /*
@@ -56,6 +59,31 @@ public class Sprite {
     public static Sprite player_dead2 = new Sprite(DEFAULT_SIZE, 5, 2, SpriteSheet.tiles, 13, 15);
     public static Sprite player_dead3 = new Sprite(DEFAULT_SIZE, 6, 2, SpriteSheet.tiles, 16, 16);
 
+    /*
+    |--------------------------------------------------------------------------
+    | Bomber 2 Sprites
+    |--------------------------------------------------------------------------
+     */
+    public static Sprite player2_up = new Sprite(DEFAULT_SIZE, 4, 3, SpriteSheet.player, 12, 15);
+    public static Sprite player2_down = new Sprite(DEFAULT_SIZE, 2, 3, SpriteSheet.player, 13, 16);
+    public static Sprite player2_left = new Sprite(DEFAULT_SIZE, 0, 3, SpriteSheet.player, 14, 16);
+    public static Sprite player2_right = new Sprite(DEFAULT_SIZE, 7, 3, SpriteSheet.player, 14, 16);
+
+    public static Sprite player2_up_1 = new Sprite(DEFAULT_SIZE, 5, 3, SpriteSheet.player, 12, 15);
+    public static Sprite player2_up_2 = player2_up; //new Sprite(16, 0, 2, SpriteSheet.player, 12, 15);
+
+    public static Sprite player2_down_1 = new Sprite(DEFAULT_SIZE, 3, 3, SpriteSheet.player, 13, 16);
+    public static Sprite player2_down_2 = player2_down; //new Sprite(16, 2, 2, SpriteSheet.player, 12, 16);
+
+    public static Sprite player2_left_1 = new Sprite(DEFAULT_SIZE, 1, 3, SpriteSheet.player, 13, 15);
+    public static Sprite player2_left_2 = player2_left; //new Sprite(16, 3, 2, SpriteSheet.player, 12 ,16);
+
+    public static Sprite player2_right_1 = new Sprite(DEFAULT_SIZE, 6, 3, SpriteSheet.player, 13, 15);
+    public static Sprite player2_right_2 = player2_right; //new Sprite(16, 1, 2, SpriteSheet.player, 12, 16);
+
+    public static Sprite player2_dead1 = new Sprite(DEFAULT_SIZE, 0, 4, SpriteSheet.player, 16, 16);
+    public static Sprite player2_dead2 = new Sprite(DEFAULT_SIZE, 1, 4, SpriteSheet.player, 16, 16);
+    public static Sprite player2_dead3 = new Sprite(DEFAULT_SIZE, 2, 4, SpriteSheet.player, 16, 15);
     /*
     |--------------------------------------------------------------------------
     | Character
@@ -168,9 +196,12 @@ public class Sprite {
     | Brick FlameSegment
     |--------------------------------------------------------------------------
      */
-    public static Sprite brick_exploded = new Sprite(DEFAULT_SIZE, 7, 1, SpriteSheet.tiles, 16, 16);
-    public static Sprite brick_exploded1 = new Sprite(DEFAULT_SIZE, 7, 2, SpriteSheet.tiles, 16, 16);
-    public static Sprite brick_exploded2 = new Sprite(DEFAULT_SIZE, 7, 3, SpriteSheet.tiles, 16, 16);
+    public static Sprite brick_exploded = new Sprite(16, 3, 2, SpriteSheet.player, 16, 16);
+    public static Sprite brick_exploded1 = new Sprite(16, 4, 2, SpriteSheet.player, 16, 16);
+    public static Sprite brick_exploded2 = new Sprite(16, 5, 2, SpriteSheet.player, 16, 16);
+//	public static Sprite brick_exploded = new Sprite(DEFAULT_SIZE, 7, 1, SpriteSheet.tiles, 16, 16);
+//	public static Sprite brick_exploded1 = new Sprite(DEFAULT_SIZE, 7, 2, SpriteSheet.tiles, 16, 16);
+//	public static Sprite brick_exploded2 = new Sprite(DEFAULT_SIZE, 7, 3, SpriteSheet.tiles, 16, 16);
 
     /*
     |--------------------------------------------------------------------------

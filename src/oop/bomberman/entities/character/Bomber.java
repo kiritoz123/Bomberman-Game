@@ -28,7 +28,7 @@ public class Bomber extends character {
         setSpeed(2); //set speed
         setPower(1);
         setRadius(1); // set khoang no bom
-        setCountBomb(3);
+        setCountBomb(1);
     }
 
     public void setRadius(int radius) {
@@ -59,12 +59,13 @@ public class Bomber extends character {
         if (direction == KeyCode.DOWN || direction == KeyCode.S) {
             goDown();
         }
-        if (placeBomb) {
+        if (placeBomb && bomberman.isAlive()) {
             putBomb();
         }
         for (int i = 0; i < bombs.size(); i++) {
             if (!bombs.get(i).isAlive()) {
                 bombs.remove(bombs.get(i));
+                i--;
                 countBomb++;
             }
         }
