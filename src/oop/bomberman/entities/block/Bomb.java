@@ -14,6 +14,10 @@ import static oop.bomberman.BombermanGame.bomberman;
 public class Bomb extends Entity {
     private int animate = 0;
 
+    public void setAnimate(int animate) {
+        this.animate = animate;
+    }
+
     private int radius;
     public Bomb(int xUnit, int yUnit, Image img) {
         super(xUnit, yUnit, img);
@@ -28,13 +32,11 @@ public class Bomb extends Entity {
     }
     @Override
     public void update() {
-        if (animate ++ == 120) { //cho bom no
+        if (animate++ == 120) { //cho bom no
             explodeUpgrade();
         }
         img = Sprite.movingSprite(Sprite.bomb, Sprite.bomb_1, Sprite.bomb_2, animate, 60).getFxImage();
     }
-
-
 
     public void explodeUpgrade() {
         Flame e = new Flame(x, y);

@@ -17,7 +17,7 @@ public class EntityList {
     //public static Bomber bomberman;
 
     public static void clearList() {
-        block.clear();
+        bombs.clear();
         enemy.clear();
     }
 

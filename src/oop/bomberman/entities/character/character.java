@@ -8,7 +8,7 @@ import java.awt.*;
 
 public abstract class character extends Entity {
 
-    protected final int MAX_ANIMATE = 7500; //save the animation status
+    protected final int MAX_ANIMATE = 10000; //save the animation status
     protected int animate = 0;
 
     protected int X;

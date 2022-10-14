@@ -1,11 +1,13 @@
 package oop.bomberman.graphics;
 
 import oop.bomberman.BombermanGame;
+import oop.bomberman.Item.BombItem;
 import oop.bomberman.entities.Entity;
 import oop.bomberman.entities.EntityList;
 import oop.bomberman.entities.block.Brick;
 import oop.bomberman.entities.block.Grass;
 import oop.bomberman.entities.block.Wall;
+import oop.bomberman.entities.character.enemy.Balloom;
 import oop.bomberman.level.Layer;
 
 import java.io.BufferedReader;
@@ -14,6 +16,7 @@ import java.io.IOException;
 
 import static oop.bomberman.BombermanGame.*;
 import static oop.bomberman.entities.EntityList.block;
+import static oop.bomberman.entities.EntityList.enemies;
 
 public class CreateMap {
     public static int mapStartX = 0;// Coordinates of Map relative to Window.
@@ -46,6 +49,7 @@ public class CreateMap {
 
     public static void createMapLevel(int level) {
         EntityList.clearList();
+        enemies.add(new Balloom(2,2,Sprite.balloom_left1.getFxImage()));
         try {
             importData(gird, level);
         } catch (IOException e) {
@@ -54,24 +58,17 @@ public class CreateMap {
         for (int i = 0; i < HEIGHTMAP; i++) {
             for (int j = 0; j < WIDTHMAP; j++) {
                 //EntityList.block.add(new Wall(j,i,Sprite.wall.getFxImage()));
-                switch (gird[i][j]) {
-
-                    case 0:
-                        block.add(new Grass(j, i, Sprite.grass.getFxImage()));
-
-                        //EntityList.block.add(new Wall(j,i,Sprite.wall.getFxImage()));
-                        break;
-                    case 2:
-                        block.add(new Wall(j, i, Sprite.wall.getFxImage()));
-                        break;
-                    case 1:
-                        //EntityList.block.add(new Grass(j, i, Sprite.grass.getFxImage()));
-                        block.add(new Brick(j, i, Sprite.brick.getFxImage()));
-                        break;
-
-
+                if(gird[i][j] == 2) {
+                    block.add(new Wall(j,i,Sprite.wall.getFxImage()));
                 }
-                block.sort(new Layer());
+                else {
+                    block.add(new Grass(j,i,Sprite.grass.getFxImage()));
+                    if(gird[i][j] == 1) {
+                        block.add(new BombItem(j,i,Sprite.powerup_bombs.getFxImage()));
+                        block.add(new Brick(j,i,Sprite.brick.getFxImage()));
+                    }
+                }
+
             }
         }
     }

@@ -3,6 +3,7 @@ package oop.bomberman.entities.character;
 
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
+import oop.bomberman.entities.EntityList;
 import oop.bomberman.entities.block.Bomb;
 import oop.bomberman.graphics.Sprite;
 
@@ -65,7 +66,6 @@ public class Bomber extends character {
         for (int i = 0; i < bombs.size(); i++) {
             if (!bombs.get(i).isAlive()) {
                 bombs.remove(bombs.get(i));
-                i--;
                 countBomb++;
             }
         }
@@ -75,6 +75,7 @@ public class Bomber extends character {
             img = Sprite.movingSprite(Sprite.player2_dead1, Sprite.player2_dead2,
                     Sprite.player2_dead3, animate++, 20).getFxImage();
             if(time > 30) {
+                EntityList.clearList();
                 bomberman = new Bomber(1, 1, Sprite.player2_right.getFxImage());
             }
         }

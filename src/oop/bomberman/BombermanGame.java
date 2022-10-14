@@ -9,13 +9,17 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
 import oop.bomberman.Control.menu;
 import oop.bomberman.Item.BombItem;
+import oop.bomberman.Item.Item;
 import oop.bomberman.Item.SpeedItem;
 import oop.bomberman.entities.Entity;
+import oop.bomberman.entities.EntityList;
 import oop.bomberman.entities.block.*;
 import oop.bomberman.entities.character.Bomber;
 import oop.bomberman.entities.character.enemy.Balloom;
 import oop.bomberman.entities.character.enemy.Enemy;
+import oop.bomberman.entities.character.enemy.Oneal;
 import oop.bomberman.graphics.Sprite;
+import oop.bomberman.level.Layer;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -86,8 +90,8 @@ public class BombermanGame extends Application {
             bomberman.handleKeyPressedEvent(event.getCode());
         });
         bomberman = new Bomber(1, 1, Sprite.player2_right.getFxImage());
-        Balloom ball = new Balloom(10, 9, Sprite.balloom_dead.getFxImage());
-        enemies.add(ball);
+
+        //enemies.add(new Oneal(2,2,Sprite.oneal_dead.getFxImage()));
         scene.setOnKeyReleased(event -> bomberman.handleKeyReleasedEvent(event.getCode()));
     }
 
@@ -119,11 +123,11 @@ public class BombermanGame extends Application {
         }
 
         bomberman.update();
-        for (Bomb bomb : bombs) {
-            bomb.update();
+        for (int i = 0; i < bombs.size(); i++) {
+            bombs.get(i).update();
         }
-        for (Enemy e : enemies) {
-            e.update();
+        for (int i = 0; i < enemies.size(); i++) {
+            enemies.get(i).update();
         }
         for (int i = 0; i < block.size(); i++) {
             block.get(i).update();
@@ -148,15 +152,17 @@ public class BombermanGame extends Application {
     public void render() {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         //grasses.forEach(g->g.render(gc));
-        block.forEach(g -> g.render(gc));
+        block.sort(new Layer());
+        for (int i = block.size() - 1; i >= 0; i--) {
+            block.get(i).render(gc);
+        }
         //walls.forEach(g->g.render(gc));
         //grasses.forEach(g->g.render(gc));
         //bricks.forEach(g->g.render(gc));
 
         bombs.forEach(g -> g.render(gc));
-
-        enemies.forEach(g -> g.render(gc));
         flame.forEach(g -> g.render(gc));
+        enemies.forEach(g -> g.render(gc));
         bomberman.render(gc);
 
 
@@ -169,6 +175,9 @@ public class BombermanGame extends Application {
             Rectangle r2 = block.getBounds();
             if (r2.intersects(r1)) {
                 if (bomberman.getLayer() >= block.getLayer()) {
+                    if(block instanceof Item) {
+                        EntityList.block.remove(block);
+                    }
                     bomberman.move();
                 } else {
                     bomberman.stay();
@@ -207,11 +216,13 @@ public class BombermanGame extends Application {
                 if(r1.intersects(Rb) && b instanceof Brick) {
                     Random random = new Random();
                     int rand = random.nextInt(3);
-                    if(rand == 1) {
-                        block.add(new SpeedItem(b.getX()/32,b.getY()/32,Sprite.powerup_speed.getFxImage()));
-                    }
-                    else block.add(new BombItem(b.getX()/32,b.getY()/32,Sprite.powerup_bombs.getFxImage()));
-                    block.remove(b);
+                    b.setAlive(false);
+                }
+            }
+            for(int i=1;i<bombs.size();i++) {
+                Rectangle Rbom = bombs.get(i).getBounds();
+                if(r1.intersects(Rbom) ) {
+                    bombs.get(i).setAnimate(119);
                 }
             }
             if(r1.intersects(rec)) {
