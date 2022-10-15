@@ -8,6 +8,7 @@ import java.awt.*;
 
 public abstract class character extends Entity {
 
+
     protected final int MAX_ANIMATE = 10000; //save the animation status
     protected int animate = 0;
 
@@ -17,10 +18,6 @@ public abstract class character extends Entity {
 
     public character(int xUnit, int yUnit, Image img) {
         super(xUnit, yUnit, img);
-    }
-
-    public void setSpeed(int speed) {
-        this.speed = speed;
     }
 
     public void goLeft() {
@@ -48,15 +45,22 @@ public abstract class character extends Entity {
         X = x;
         Y = y;
     }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
     public Rectangle getBounds() {
         return new Rectangle(X, Y, Sprite.SCALED_SIZE, Sprite.SCALED_SIZE);
     }
 
     protected void animated() {
-        if (animate < MAX_ANIMATE) {
-            animate++;
-        } else {
-            animate = 0; //reset animation
+        if (animate > MAX_ANIMATE) {
+            animate = 0;
         }
     }
 }

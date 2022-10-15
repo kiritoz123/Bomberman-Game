@@ -8,16 +8,12 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
 import oop.bomberman.Control.menu;
-import oop.bomberman.Item.BombItem;
-import oop.bomberman.Item.Item;
-import oop.bomberman.Item.SpeedItem;
+import oop.bomberman.Item.*;
 import oop.bomberman.entities.Entity;
 import oop.bomberman.entities.EntityList;
 import oop.bomberman.entities.block.*;
 import oop.bomberman.entities.character.Bomber;
-import oop.bomberman.entities.character.enemy.Balloom;
 import oop.bomberman.entities.character.enemy.Enemy;
-import oop.bomberman.entities.character.enemy.Oneal;
 import oop.bomberman.graphics.Sprite;
 import oop.bomberman.level.Layer;
 
@@ -26,7 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import static oop.bomberman.Control.menu.updateMenu;
 import static oop.bomberman.entities.EntityList.*;
 import static oop.bomberman.graphics.CreateMap.createMapLevel;
 
@@ -39,10 +34,22 @@ public class BombermanGame extends Application {
     public static boolean Bright;
     public static boolean Bleft;
     public static Bomber bomberman;
-    public static boolean Run=true;
+    public static boolean Run = true;
     public static boolean isPause;
     private final List<Entity> entities = new ArrayList<>();
     public List<Entity> Obj = new ArrayList<>();
+    private long start1;
+    private long start2;
+    private long start3;
+    private long start4;
+    private long start5;
+    private int level = 1;
+    private long elapsedTimeMillis1;
+    private long elapsedTimeMillis12;
+    private long elapsedTimeMillis3;
+    private long elapsedTimeMillis4;
+    private long elapsedTimeMillis5;
+    private boolean flamePass = false;
     private GraphicsContext gc;
     private Canvas canvas;
 
@@ -72,20 +79,22 @@ public class BombermanGame extends Application {
         Stage.setScene(scene);
         Stage.setTitle("BomberGame");
         Stage.show();
-        System.currentTimeMillis();
+
         AnimationTimer time = new AnimationTimer() {
             @Override
             public void handle(long l) {
                 render();
-                if(isPause){
+                if (isPause) {
                     update();
                     //time();
+
                 }
             }
         };
         time.start();
-        createMapLevel(1);
+        createMapLevel(level);
         //createMap();
+
         scene.setOnKeyPressed(event -> {
             bomberman.handleKeyPressedEvent(event.getCode());
         });
@@ -162,6 +171,7 @@ public class BombermanGame extends Application {
 
         bombs.forEach(g -> g.render(gc));
         flame.forEach(g -> g.render(gc));
+
         enemies.forEach(g -> g.render(gc));
         bomberman.render(gc);
 
@@ -175,8 +185,33 @@ public class BombermanGame extends Application {
             Rectangle r2 = block.getBounds();
             if (r2.intersects(r1)) {
                 if (bomberman.getLayer() >= block.getLayer()) {
-                    if(block instanceof Item) {
+                    if (block instanceof Item) {
                         EntityList.block.remove(block);
+                        if (block instanceof BombItem) {
+                            start1 = System.currentTimeMillis();
+                            bomberman.setCountBomb(bomberman.getCountBomb() + 1);
+
+                        }
+                        if (block instanceof FlameItem) {
+                            bomberman.setRadius(2);
+                            start2 = System.currentTimeMillis();
+                        }
+                        if (block instanceof WallItem) {
+                            bomberman.setLayer(5);
+                            start3 = System.currentTimeMillis();
+                        }
+                        if (block instanceof SpeedItem) {
+                            bomberman.setSpeed(4);
+                            start4 = System.currentTimeMillis();
+
+                        }
+                        if (block instanceof FlamePass) {
+                            flamePass = true;
+                            start5 = System.currentTimeMillis();
+                        }
+                    }
+                    if (block instanceof Portal) {
+                        level++;
                     }
                     bomberman.move();
                 } else {
@@ -192,11 +227,45 @@ public class BombermanGame extends Application {
                     } else e.stay();
                     break;
                 }
-                if(Rec1.intersects(r1)) {
+                if (Rec1.intersects(r1)) {
                     bomberman.setAlive(false);
                 }
             }
+            if (!r2.intersects(r1) && block instanceof Grass) {
+                if (bomberman.getLayer() > 1) {
+
+                    elapsedTimeMillis3 = System.currentTimeMillis() - start3;
+                    if (elapsedTimeMillis3 > 10000) {
+                        bomberman.setLayer(1);
+                    }
+                }
+            }
         }
+        if (bomberman.getCountBomb() > 1) { //thoi gian su dung BombItem
+            elapsedTimeMillis1 = System.currentTimeMillis() - start1;
+            if (elapsedTimeMillis1 > 10000) {
+                bomberman.setCountBomb(1);
+            }
+        }
+        if (bomberman.getRadius() > 1) { //thoi gian su dung FlameItem
+            elapsedTimeMillis12 = System.currentTimeMillis() - start2;
+            if (elapsedTimeMillis12 > 10000) {
+                bomberman.setRadius(1);
+            }
+        }
+        if (bomberman.getSpeed() > 2) {
+            elapsedTimeMillis4 = System.currentTimeMillis() - start4;
+            if (elapsedTimeMillis4 > 10000) {
+                bomberman.setSpeed(2);
+            }
+        }
+        if (flamePass) {
+            elapsedTimeMillis5 = System.currentTimeMillis() - start5;
+            if (elapsedTimeMillis5 > 10000) {
+                flamePass = false;
+            }
+        }
+
 
     }
 
@@ -211,22 +280,22 @@ public class BombermanGame extends Application {
 
                 }
             }
-            for(Entity b : block) {
+            for (Entity b : block) {
                 Rectangle Rb = b.getBounds();
-                if(r1.intersects(Rb) && b instanceof Brick) {
+                if (r1.intersects(Rb) && b instanceof Brick) {
                     Random random = new Random();
                     int rand = random.nextInt(3);
                     b.setAlive(false);
                 }
             }
-            for(int i=1;i<bombs.size();i++) {
+            for (int i = 1; i < bombs.size(); i++) { //xu ly bom no voi bom khac
                 Rectangle Rbom = bombs.get(i).getBounds();
-                if(r1.intersects(Rbom) ) {
+                if (r1.intersects(Rbom)) {
                     bombs.get(i).setAnimate(119);
                 }
             }
-            if(r1.intersects(rec)) {
-                bomberman.setAlive(false);
+            if (r1.intersects(rec)) {
+                if (!flamePass) bomberman.setAlive(false);
             }
         }
     }

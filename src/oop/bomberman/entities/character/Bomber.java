@@ -19,7 +19,7 @@ public class Bomber extends character {
     private boolean placeBomb = false;
     //private final List<Bomb> bombs = new ArrayList<>();
     private KeyCode direction = null;
-    private  int time = 0;
+    private int time = 0;
     private int radius;
     private int power;
 
@@ -32,10 +32,6 @@ public class Bomber extends character {
         setCountBomb(1);
     }
 
-    public void setRadius(int radius) {
-        this.radius = radius;
-    }
-
     public int getCountBomb() {
         return countBomb;
     }
@@ -44,39 +40,39 @@ public class Bomber extends character {
         this.countBomb = countBomb;
     }
 
-
     @Override
     public void update() {
-
-        if (direction == KeyCode.LEFT || direction == KeyCode.A) {
-            goLeft();
-        }
-        if (direction == KeyCode.RIGHT || direction == KeyCode.D) {
-            goRight();
-        }
-        if (direction == KeyCode.UP || direction == KeyCode.W) {
-            goUp();
-        }
-        if (direction == KeyCode.DOWN || direction == KeyCode.S) {
-            goDown();
-        }
-        if (placeBomb && bomberman.isAlive()) {
-            putBomb();
-        }
-        for (int i = 0; i < bombs.size(); i++) {
-            if (!bombs.get(i).isAlive()) {
-                bombs.remove(bombs.get(i));
-                countBomb++;
+        if (isAlive()) {
+            if (direction == KeyCode.LEFT || direction == KeyCode.A) {
+                goLeft();
+            }
+            if (direction == KeyCode.RIGHT || direction == KeyCode.D) {
+                goRight();
+            }
+            if (direction == KeyCode.UP || direction == KeyCode.W) {
+                goUp();
+            }
+            if (direction == KeyCode.DOWN || direction == KeyCode.S) {
+                goDown();
+            }
+            if (placeBomb && bomberman.isAlive()) {
+                putBomb();
+            }
+            for (int i = 0; i < bombs.size(); i++) {
+                if (!bombs.get(i).isAlive()) {
+                    bombs.remove(bombs.get(i));
+                    countBomb++;
+                }
             }
         }
-
-        if(!alive) {
+        if (!alive) {
             time++;
             img = Sprite.movingSprite(Sprite.player2_dead1, Sprite.player2_dead2,
                     Sprite.player2_dead3, animate++, 20).getFxImage();
-            if(time > 30) {
+            if (time > 20) {
                 EntityList.clearList();
                 bomberman = new Bomber(1, 1, Sprite.player2_right.getFxImage());
+
             }
         }
         animated();
@@ -86,12 +82,20 @@ public class Bomber extends character {
 
         if (keyCode == KeyCode.LEFT || keyCode == KeyCode.RIGHT
                 || keyCode == KeyCode.UP || keyCode == KeyCode.DOWN || keyCode == KeyCode.A || keyCode == KeyCode.D
-        || keyCode == KeyCode.W || keyCode == KeyCode.S) {
+                || keyCode == KeyCode.W || keyCode == KeyCode.S) {
             this.direction = keyCode;
         }
         if (keyCode == KeyCode.SPACE) {
             placeBomb = true;
         }
+    }
+
+    public int getRadius() {
+        return radius;
+    }
+
+    public void setRadius(int radius) {
+        this.radius = radius;
     }
 
     public void handleKeyReleasedEvent(KeyCode keyCode) {
