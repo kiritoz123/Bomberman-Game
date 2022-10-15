@@ -14,6 +14,7 @@ import oop.bomberman.entities.EntityList;
 import oop.bomberman.entities.block.*;
 import oop.bomberman.entities.character.Bomber;
 import oop.bomberman.entities.character.enemy.Enemy;
+import oop.bomberman.graphics.CreateMap;
 import oop.bomberman.graphics.Sprite;
 import oop.bomberman.level.Layer;
 
@@ -211,7 +212,8 @@ public class BombermanGame extends Application {
                         }
                     }
                     if (block instanceof Portal) {
-                        level++;
+                        createMapLevel(++level);
+                        bomberman.setAlive(false);
                     }
                     bomberman.move();
                 } else {

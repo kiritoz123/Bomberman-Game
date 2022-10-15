@@ -46,6 +46,7 @@ public class CreateMap {
 
     public static void createMapLevel(int level) {
         EntityList.clearList();
+        block.clear();
         enemies.add(new Balloom(2, 2, Sprite.balloom_left1.getFxImage()));
         try {
             importData(gird, level);

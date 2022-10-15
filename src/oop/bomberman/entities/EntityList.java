@@ -10,7 +10,7 @@ import java.util.List;
 
 public class EntityList {
     public static final List<Entity> block = new ArrayList<>();
-    public static final List<Character> enemy = new ArrayList<>();
+
     public static final List<Flame> flame = new ArrayList<>();
     public static final List<Enemy> enemies = new ArrayList<>();
     public static List<Bomb> bombs = new ArrayList<>();
@@ -18,7 +18,8 @@ public class EntityList {
 
     public static void clearList() {
         bombs.clear();
-        enemy.clear();
+
+        flame.clear();
     }
 
 }
