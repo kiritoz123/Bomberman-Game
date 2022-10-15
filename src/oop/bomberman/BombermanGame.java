@@ -24,6 +24,7 @@ import java.util.Random;
 
 import static oop.bomberman.entities.EntityList.*;
 import static oop.bomberman.graphics.CreateMap.createMapLevel;
+import static oop.bomberman.Control.menu.*;
 
 
 public class BombermanGame extends Application {
@@ -52,7 +53,7 @@ public class BombermanGame extends Application {
     private boolean flamePass = false;
     private GraphicsContext gc;
     private Canvas canvas;
-
+    private long last_time;
     public static void main(String[] args) {
 
         Application.launch(BombermanGame.class);
@@ -79,14 +80,14 @@ public class BombermanGame extends Application {
         Stage.setScene(scene);
         Stage.setTitle("BomberGame");
         Stage.show();
-
+        last_time = System.currentTimeMillis();
         AnimationTimer time = new AnimationTimer() {
             @Override
             public void handle(long l) {
                 render();
                 if (isPause) {
                     update();
-                    //time();
+                    time();
 
                 }
             }
@@ -300,5 +301,15 @@ public class BombermanGame extends Application {
         }
     }
 
-
+    public void time() {
+        long now = System.currentTimeMillis();
+        if (now - last_time > 1000) {
+            last_time = System.currentTimeMillis();
+            time.setText("Time: " + time_number);
+            time_number--;
+            if (time_number < 0) {
+                bomberman.setAlive(false);
+            }
+        }
+    }
 }

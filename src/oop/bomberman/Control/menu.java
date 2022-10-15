@@ -15,7 +15,7 @@ import static oop.bomberman.BombermanGame.*;
 public class menu {
     public static ImageView statusGame, author_view;
     public static Text level, bomb, time;
-    public static int bomb_number = 20, time_number = 20;
+    public static int bomb_number = 20, time_number = 120;
     public static Image pauseGame, playGame;
 
     public static void createMenu(Group root) throws InterruptedException { //Create a menu
