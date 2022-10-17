@@ -2,18 +2,23 @@ package oop.bomberman;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import oop.bomberman.Control.menu;
 import oop.bomberman.Item.*;
+import oop.bomberman.Sound.SoundPlay;
 import oop.bomberman.entities.Entity;
 import oop.bomberman.entities.EntityList;
 import oop.bomberman.entities.block.*;
 import oop.bomberman.entities.character.Bomber;
 import oop.bomberman.entities.character.enemy.Enemy;
+import oop.bomberman.entities.character.enemy.Oneal;
 import oop.bomberman.graphics.CreateMap;
 import oop.bomberman.graphics.Sprite;
 import oop.bomberman.level.Layer;
@@ -23,6 +28,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import static oop.bomberman.Sound.SoundPlay.is_sound_died;
+import static oop.bomberman.Sound.SoundPlay.updateSound;
 import static oop.bomberman.entities.EntityList.*;
 import static oop.bomberman.graphics.CreateMap.createMapLevel;
 import static oop.bomberman.Control.menu.*;
@@ -45,7 +52,7 @@ public class BombermanGame extends Application {
     private long start3;
     private long start4;
     private long start5;
-    private int level = 1;
+    public static int level = 1;
     private long elapsedTimeMillis1;
     private long elapsedTimeMillis12;
     private long elapsedTimeMillis3;
@@ -67,17 +74,16 @@ public class BombermanGame extends Application {
         gc = canvas.getGraphicsContext2D();
         // Tao root container
         Group root = new Group();
-        root.getChildren().add(canvas);
         menu.createMenu(root);
+        root.getChildren().add(canvas);
+        root.getChildren().add(author_view);
+        root.getChildren().add(startGame);
+
         //Pane pane = createBackground();
-
-
         Scene scene = new Scene(root);
-
-
-        //Scene scene = new Scene(root);
-
-
+        Stage.setResizable(false);
+        Stage.setX(320);
+        Stage.setY(180);
         Stage.setScene(scene);
         Stage.setTitle("BomberGame");
         Stage.show();
@@ -88,7 +94,7 @@ public class BombermanGame extends Application {
                 render();
                 if (isPause) {
                     update();
-                    time();
+                    time(root);
 
                 }
             }
@@ -101,6 +107,7 @@ public class BombermanGame extends Application {
             bomberman.handleKeyPressedEvent(event.getCode());
         });
         bomberman = new Bomber(1, 1, Sprite.player2_right.getFxImage());
+        enemies.add(new Oneal(3,3,Sprite.oneal_left1.getFxImage()));
 
         //enemies.add(new Oneal(2,2,Sprite.oneal_dead.getFxImage()));
         scene.setOnKeyReleased(event -> bomberman.handleKeyReleasedEvent(event.getCode()));
@@ -145,6 +152,7 @@ public class BombermanGame extends Application {
         }
         handleCollisions();
         collisionFlame();
+        updateSound();
 
         /*for (int i = 0; i < flame.size(); i ++) {
             flame.get(i).update();
@@ -212,7 +220,7 @@ public class BombermanGame extends Application {
                             start5 = System.currentTimeMillis();
                         }
                     }
-                    if (block instanceof Portal) {
+                    if (block instanceof Portal && enemies.size() == 0) {
                         createMapLevel(++level);
                         bomberman.setAlive(false);
                     }
@@ -232,6 +240,7 @@ public class BombermanGame extends Application {
                 }
                 if (Rec1.intersects(r1)) {
                     bomberman.setAlive(false);
+
                 }
             }
             if (!r2.intersects(r1) && block instanceof Grass) {
@@ -289,6 +298,7 @@ public class BombermanGame extends Application {
                     Random random = new Random();
                     int rand = random.nextInt(3);
                     b.setAlive(false);
+
                 }
             }
             for (int i = 1; i < bombs.size(); i++) { //xu ly bom no voi bom khac
@@ -298,12 +308,15 @@ public class BombermanGame extends Application {
                 }
             }
             if (r1.intersects(rec)) {
-                if (!flamePass) bomberman.setAlive(false);
+                if (!flamePass) {
+                    bomberman.setAlive(false);
+
+                }
             }
         }
     }
 
-    public void time() {
+    public void time(Group root) {
         long now = System.currentTimeMillis();
         if (now - last_time > 1000) {
             last_time = System.currentTimeMillis();
@@ -311,6 +324,12 @@ public class BombermanGame extends Application {
             time_number--;
             if (time_number < 0) {
                 bomberman.setAlive(false);
+                new SoundPlay("sound/just_died.wav", "just_died");
+
+                isPause = false;
+                updateMenu();
+                root.getChildren().add(author_view);
+
             }
         }
     }
