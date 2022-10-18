@@ -6,6 +6,7 @@ import oop.bomberman.entities.character.Bomber;
 import oop.bomberman.graphics.Sprite;
 
 import java.awt.*;
+import java.util.Random;
 
 import static oop.bomberman.BombermanGame.bomberman;
 import static oop.bomberman.entities.EntityList.enemies;
@@ -19,6 +20,7 @@ public class Oneal extends Enemy {
         startY = yUnit;
         setLayer(1);
         setSpeed(2);
+        CreateMove();
 
     }
 
@@ -52,14 +54,16 @@ public class Oneal extends Enemy {
 
     @Override
     public void update() {
-        CreateMove();
-        if (move == 0) goLeft();
-        if (move == 1) goRight();
-        if (move == 2) goUp();
-        if (move == 3) goDown();
-        if(! bomberman.isAlive()) {
-            restartEnemy();
+        //CreateMove();
+        if(move == 1 || bomberman.getY() == this.y) {
+            if (bomberman.getX() - x < 0) goLeft();
+            if (bomberman.getX() - x > 0) goRight();
         }
+        else {
+            if (bomberman.getY() - y < 0) goUp();
+            if (bomberman.getY() - y > 0) goDown();
+        }
+
         if(isAlive()){
 
         } else if(time < 40) {
@@ -71,19 +75,15 @@ public class Oneal extends Enemy {
         } else
             enemies.remove(this);
     }
-
+    @Override
     public void CreateMove() {
+        Random rand = new Random();
+        move = rand.nextInt(2);
 
-        if (bomberman.getX()  - x  < 0) move = 0;
-        if (bomberman.getX()  - x  > 0) move = 1;
-        if (bomberman.getY()  - y  < 0) move = 2;
-        if (bomberman.getY()  - y  > 0) move = 3;
     }
 
-
+    @Override
     public void restartEnemy() {
-        super.stay();
-        this.x = startX * Sprite.SCALED_SIZE;
-        this.y = startY * Sprite.SCALED_SIZE;
+
     }
 }

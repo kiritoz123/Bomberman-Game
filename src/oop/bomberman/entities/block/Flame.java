@@ -1,6 +1,7 @@
 package oop.bomberman.entities.block;
 
 import javafx.scene.image.Image;
+import oop.bomberman.Sound.SoundPlay;
 import oop.bomberman.entities.Entity;
 import oop.bomberman.graphics.Sprite;
 
@@ -41,6 +42,7 @@ public class Flame extends Entity {
         if (time < 20) {
             time++;
             setImg(); //set animation
+
         } else flame.remove(this);
 
     }
@@ -55,6 +57,7 @@ public class Flame extends Entity {
         flameTop();
         flameDown();
         Explosion();
+        new SoundPlay("sound/bomb_explosion.wav", "explosion");
 
     }
 

@@ -28,8 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import static oop.bomberman.Sound.SoundPlay.is_sound_died;
-import static oop.bomberman.Sound.SoundPlay.updateSound;
+import static oop.bomberman.Sound.SoundPlay.*;
 import static oop.bomberman.entities.EntityList.*;
 import static oop.bomberman.graphics.CreateMap.createMapLevel;
 import static oop.bomberman.Control.menu.*;
@@ -92,11 +91,13 @@ public class BombermanGame extends Application {
             @Override
             public void handle(long l) {
                 render();
+
                 if (isPause) {
                     update();
                     time(root);
-
+                    updateSound();
                 }
+
             }
         };
         time.start();
@@ -152,7 +153,7 @@ public class BombermanGame extends Application {
         }
         handleCollisions();
         collisionFlame();
-        updateSound();
+
 
         /*for (int i = 0; i < flame.size(); i ++) {
             flame.get(i).update();
@@ -324,9 +325,13 @@ public class BombermanGame extends Application {
             time_number--;
             if (time_number < 0) {
                 bomberman.setAlive(false);
-                new SoundPlay("sound/just_died.wav", "just_died");
+                //enemies.clear();
+                createMapLevel(level);
+                new SoundPlay("sound/just_died.wav", "died");
 
                 isPause = false;
+                title_screen.close();
+
                 updateMenu();
                 root.getChildren().add(author_view);
 

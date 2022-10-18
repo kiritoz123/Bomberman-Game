@@ -14,11 +14,12 @@ import oop.bomberman.BombermanGame;
 import oop.bomberman.level.FileLevel;
 
 import static oop.bomberman.BombermanGame.*;
+import static oop.bomberman.Sound.SoundPlay.is_sound_title;
 
 public class menu {
     public static ImageView statusGame, author_view,startGame;
     public static Text level, bomb, time;
-    public static int bomb_number = 20, time_number = 120;
+    public static int bomb_number = 20, time_number = 8;
     public static Image pauseGame, playGame;
 
     public static void createMenu(Group root) throws InterruptedException { //Create a menu
@@ -85,13 +86,15 @@ public class menu {
         statusGame.setOnMouseClicked(event-> {
             if (bomberman.isAlive()) {
                 isPause = !isPause;
+
                 updateMenu();
             }
             else {
                 statusGame.setImage(playGame);
                 root.getChildren().remove(author_view);
                 isPause = true;
-                time_number = 120;
+                time_number = 10;
+                is_sound_title = false;
             }
 
         });
