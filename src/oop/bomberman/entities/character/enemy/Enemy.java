@@ -14,4 +14,7 @@ public abstract class Enemy extends character {
         alive = true;
     }
 
+    public abstract void CreateMove();
+
+    public abstract void restartEnemy();
 }

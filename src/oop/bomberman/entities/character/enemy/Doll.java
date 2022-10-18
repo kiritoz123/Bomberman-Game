@@ -24,6 +24,11 @@ public class Doll extends Enemy{
     }
 
     @Override
+    public void restartEnemy() {
+
+    }
+
+    @Override
     public void update() {
         if(isAlive()) {
             if (move == 0) goLeft();

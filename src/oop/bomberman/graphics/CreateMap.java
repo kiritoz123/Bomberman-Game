@@ -7,6 +7,7 @@ import oop.bomberman.entities.block.Grass;
 import oop.bomberman.entities.block.Portal;
 import oop.bomberman.entities.block.Wall;
 import oop.bomberman.entities.character.enemy.Balloom;
+import oop.bomberman.entities.character.enemy.Oneal;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -83,6 +84,9 @@ public class CreateMap {
                     if (gird[i][j] == 7) {
                         block.add(new FlamePass(j, i, Sprite.powerup_flamepass.getFxImage()));
                         block.add(new Brick(j, i, Sprite.brick.getFxImage()));
+                    }
+                    if (gird[i][j] == 8) {
+                        enemies.add(new Oneal(j,i,Sprite.oneal_left1.getFxImage()));
                     }
                 }
 

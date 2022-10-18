@@ -22,6 +22,7 @@ import oop.bomberman.entities.character.enemy.Oneal;
 import oop.bomberman.graphics.CreateMap;
 import oop.bomberman.graphics.Sprite;
 import oop.bomberman.level.Layer;
+import javafx.scene.image.Image;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -61,6 +62,7 @@ public class BombermanGame extends Application {
     private GraphicsContext gc;
     private Canvas canvas;
     private long last_time;
+    private static Group root = new Group();
     public static void main(String[] args) {
 
         Application.launch(BombermanGame.class);
@@ -72,7 +74,6 @@ public class BombermanGame extends Application {
         canvas.setTranslateY(32);
         gc = canvas.getGraphicsContext2D();
         // Tao root container
-        Group root = new Group();
         menu.createMenu(root);
         root.getChildren().add(canvas);
         root.getChildren().add(author_view);
@@ -91,13 +92,11 @@ public class BombermanGame extends Application {
             @Override
             public void handle(long l) {
                 render();
-
                 if (isPause) {
                     update();
                     time(root);
-                    updateSound();
-                }
 
+                }
             }
         };
         time.start();
@@ -108,7 +107,6 @@ public class BombermanGame extends Application {
             bomberman.handleKeyPressedEvent(event.getCode());
         });
         bomberman = new Bomber(1, 1, Sprite.player2_right.getFxImage());
-        enemies.add(new Oneal(3,3,Sprite.oneal_left1.getFxImage()));
 
         //enemies.add(new Oneal(2,2,Sprite.oneal_dead.getFxImage()));
         scene.setOnKeyReleased(event -> bomberman.handleKeyReleasedEvent(event.getCode()));
@@ -153,7 +151,7 @@ public class BombermanGame extends Application {
         }
         handleCollisions();
         collisionFlame();
-
+        updateSound();
 
         /*for (int i = 0; i < flame.size(); i ++) {
             flame.get(i).update();
@@ -324,18 +322,24 @@ public class BombermanGame extends Application {
             time.setText("Time: " + time_number);
             time_number--;
             if (time_number < 0) {
-                bomberman.setAlive(false);
-                //enemies.clear();
-                createMapLevel(level);
-                new SoundPlay("sound/just_died.wav", "died");
-
-                isPause = false;
-                title_screen.close();
-
-                updateMenu();
-                root.getChildren().add(author_view);
-
+                gameOver();
             }
         }
     }
+
+    public static void gameOver(){
+        bomberman.setAlive(false);
+        new SoundPlay("sound/just_died.wav", "died");
+        enemies.clear();
+        Image gameOver = new Image("images/art2.png");
+        author_view.setImage(gameOver);
+        root.getChildren().add(author_view);
+        title_screen.stop();
+        menu.updateMenu();
+        createMapLevel(level);
+        time.setText("Times: 0");
+        bomberman = new Bomber(1, 1, Sprite.player2_right.getFxImage());
+        updateSound();
+    }
+
 }

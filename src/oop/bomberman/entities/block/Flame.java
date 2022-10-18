@@ -57,7 +57,7 @@ public class Flame extends Entity {
         flameTop();
         flameDown();
         Explosion();
-        new SoundPlay("sound/bomb_explosion.wav", "explosion");
+        //new SoundPlay("sound/bomb_explosion.wav", "explosion");
 
     }
 

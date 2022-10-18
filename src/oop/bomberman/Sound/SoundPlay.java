@@ -67,7 +67,6 @@ public class SoundPlay extends JFrame {
             new SoundPlay("sound/title.wav", "title");
             is_sound_title = true;
         }
-
-
     }
+
 }

@@ -8,6 +8,16 @@ public class Minvo extends Enemy{
     }
 
     @Override
+    public void CreateMove() {
+
+    }
+
+    @Override
+    public void restartEnemy() {
+
+    }
+
+    @Override
     public void update() {
 
     }

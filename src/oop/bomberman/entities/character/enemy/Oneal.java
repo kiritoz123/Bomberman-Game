@@ -1,11 +1,8 @@
 package oop.bomberman.entities.character.enemy;
 
 import javafx.scene.image.Image;
-import oop.bomberman.BombermanGame;
-import oop.bomberman.entities.character.Bomber;
 import oop.bomberman.graphics.Sprite;
 
-import java.awt.*;
 import java.util.Random;
 
 import static oop.bomberman.BombermanGame.bomberman;

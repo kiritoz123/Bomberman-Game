@@ -15,11 +15,12 @@ import oop.bomberman.level.FileLevel;
 
 import static oop.bomberman.BombermanGame.*;
 import static oop.bomberman.Sound.SoundPlay.is_sound_title;
+import static oop.bomberman.Sound.SoundPlay.title_screen;
 
 public class menu {
     public static ImageView statusGame, author_view,startGame;
     public static Text level, bomb, time;
-    public static int bomb_number = 20, time_number = 8;
+    public static int time_number = 8;
     public static Image pauseGame, playGame;
 
     public static void createMenu(Group root) throws InterruptedException { //Create a menu
@@ -73,42 +74,46 @@ public class menu {
         pauseGame = new Image("images/resumeButton.png");
 
 
+        //statusGame.setImage(pauseGame);
         startGame.setOnMouseClicked(event -> {
             root.getChildren().remove(author_view);
             root.getChildren().remove(startGame);
             statusGame.setImage(playGame);
             isPause = true;
             level.setText("Level: " + BombermanGame.level);
-            //bomb.setText("Bombs: " + bomb_number);
 
         });
         //statusGame.setImage(pauseGame);
         statusGame.setOnMouseClicked(event-> {
+            root.getChildren().remove(author_view);
             if (bomberman.isAlive()) {
+                title_screen.stop();
+                is_sound_title = false;
                 isPause = !isPause;
-
                 updateMenu();
             }
             else {
                 statusGame.setImage(playGame);
                 root.getChildren().remove(author_view);
                 isPause = true;
-                time_number = 10;
-                is_sound_title = false;
+                time_number = 120;
             }
 
         });
     }
 
     public static void updateMenu() { //Update menu
+        time_number = 120;
+        level.setText("Level: " + BombermanGame.level);
 
-        if (bomberman.isAlive())
+        if (bomberman.isAlive()) {
             if (!isPause) {
                 statusGame.setImage(pauseGame);
             } else {
                 statusGame.setImage(playGame);
             }
-        else {
+        } else {
+            isPause = false;
             Image newGame = new Image("images/startButton.png");
             statusGame.setImage(newGame);
 

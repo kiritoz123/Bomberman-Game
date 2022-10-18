@@ -17,6 +17,16 @@ public class Balloom extends Enemy {
     }
 
     @Override
+    public void CreateMove() {
+
+    }
+
+    @Override
+    public void restartEnemy() {
+
+    }
+
+    @Override
     public void update() {
         if(alive) {
             switch(move) {
