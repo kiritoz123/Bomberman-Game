@@ -1,6 +1,7 @@
 package oop.bomberman.entities.character.enemy;
 
 import javafx.scene.image.Image;
+import oop.bomberman.graphics.CreateMap;
 import oop.bomberman.graphics.Sprite;
 
 import java.util.Random;
@@ -18,7 +19,8 @@ public class Balloom extends Enemy {
 
     @Override
     public void CreateMove() {
-
+        Random rand = new Random();
+        move = rand.nextInt(4);
     }
 
     @Override
@@ -28,7 +30,7 @@ public class Balloom extends Enemy {
 
     @Override
     public void update() {
-        if(alive) {
+        if(isAlive()) {
             switch(move) {
                 case 0 :
                     goLeft();
@@ -53,16 +55,6 @@ public class Balloom extends Enemy {
         }
 
     }
-    public static void createBalloon() {
-        Random rand = new Random();
-        Balloom e1 = new Balloom(rand.nextInt(24) + 1, rand.nextInt(14)+1,Sprite.balloom_dead.getFxImage());
-        Balloom e2 = new Balloom(rand.nextInt(24) + 1, rand.nextInt(14)+1,Sprite.balloom_dead.getFxImage());
-        Balloom e3 = new Balloom(rand.nextInt(24) + 1, rand.nextInt(14)+1,Sprite.balloom_dead.getFxImage());
-        enemies.add(e1);
-        enemies.add(e2);
-        enemies.add(e3);
-    }
-
 
     @Override
     public void goLeft() {
@@ -91,7 +83,6 @@ public class Balloom extends Enemy {
     @Override
     public void stay() {
         super.stay(); // gap vat can thi random lai
-        Random rand = new Random();
-        move = rand.nextInt(4);
+        this.CreateMove();
     }
 }
