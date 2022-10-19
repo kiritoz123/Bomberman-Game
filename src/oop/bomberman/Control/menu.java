@@ -20,7 +20,7 @@ import static oop.bomberman.Sound.SoundPlay.title_screen;
 public class menu {
     public static ImageView statusGame, author_view,startGame;
     public static Text level, bomb, time;
-    public static int time_number = 8;
+    public static int time_number = 120;
     public static Image pauseGame, playGame;
 
     public static void createMenu(Group root) throws InterruptedException { //Create a menu
@@ -103,7 +103,7 @@ public class menu {
     }
 
     public static void updateMenu() { //Update menu
-        time_number = 120;
+        //time_number = 120;
         level.setText("Level: " + BombermanGame.level);
 
         if (bomberman.isAlive()) {
