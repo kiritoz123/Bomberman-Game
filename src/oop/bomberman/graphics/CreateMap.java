@@ -6,10 +6,7 @@ import oop.bomberman.entities.block.Brick;
 import oop.bomberman.entities.block.Grass;
 import oop.bomberman.entities.block.Portal;
 import oop.bomberman.entities.block.Wall;
-import oop.bomberman.entities.character.enemy.Balloom;
-import oop.bomberman.entities.character.enemy.Doll;
-import oop.bomberman.entities.character.enemy.Kondoria;
-import oop.bomberman.entities.character.enemy.Oneal;
+import oop.bomberman.entities.character.enemy.*;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -26,7 +23,7 @@ public class CreateMap {
 
     private static final int[][] gird = new int[HEIGHTMAP][WIDTHMAP];
 
-    public static void setGrid(int row, int col, char c) {
+    public static void setGrid(int row, int col, int c) {
         CreateMap.gird[row][col] = c;
     }
 
@@ -97,6 +94,12 @@ public class CreateMap {
                     }
                     if (gird[i][j] == 11) {
                         enemies.add(new Kondoria(j,i,Sprite.kondoria_left1.getFxImage()));
+                    }
+                    if(gird[i][j] == 12) {
+                        enemies.add(new Minvo(j,i,Sprite.minvo_left1.getFxImage()));
+                    }
+                    if(gird[i][j] == 13) {
+                        block.add(new Brick(j,i,Sprite.brick.getFxImage()));
                     }
                 }
             }

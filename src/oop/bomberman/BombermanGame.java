@@ -6,6 +6,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import oop.bomberman.Control.menu;
 import oop.bomberman.Item.*;
@@ -18,17 +19,17 @@ import oop.bomberman.entities.character.enemy.Enemy;
 import oop.bomberman.entities.character.enemy.Kondoria;
 import oop.bomberman.graphics.Sprite;
 import oop.bomberman.level.Layer;
-import javafx.scene.image.Image;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
-import static oop.bomberman.Sound.SoundPlay.*;
+import static oop.bomberman.Control.menu.*;
+import static oop.bomberman.Sound.SoundPlay.title_screen;
+import static oop.bomberman.Sound.SoundPlay.updateSound;
 import static oop.bomberman.entities.EntityList.*;
 import static oop.bomberman.graphics.CreateMap.createMapLevel;
-import static oop.bomberman.Control.menu.*;
+import static oop.bomberman.graphics.CreateMap.setGrid;
 
 
 public class BombermanGame extends Application {
@@ -41,6 +42,8 @@ public class BombermanGame extends Application {
     public static Bomber bomberman;
     public static boolean Run = true;
     public static boolean isPause;
+    public static int level = 1;
+    private static final Group root = new Group();
     private final List<Entity> entities = new ArrayList<>();
     public List<Entity> Obj = new ArrayList<>();
     private long start1;
@@ -48,7 +51,6 @@ public class BombermanGame extends Application {
     private long start3;
     private long start4;
     private long start5;
-    public static int level = 1;
     private long elapsedTimeMillis1;
     private long elapsedTimeMillis12;
     private long elapsedTimeMillis3;
@@ -58,11 +60,35 @@ public class BombermanGame extends Application {
     private GraphicsContext gc;
     private Canvas canvas;
     private long last_time;
-    private static Group root = new Group();
+
     public static void main(String[] args) {
 
         Application.launch(BombermanGame.class);
     }
+
+    public static void gameOver() {
+        bomberman.setAlive(false);
+        enemies.clear();
+
+        new SoundPlay("sound/just_died.wav", "died");
+
+        Image gameOver = new Image("images/art2.png");
+        author_view.setImage(gameOver);
+        root.getChildren().add(author_view);
+
+        title_screen.stop();
+        updateSound();
+
+        time_number = 120;
+        menu.updateMenu();
+        createMapLevel(level);
+        time.setText("Times: 0");
+        bomberman = new Bomber(1, 1, Sprite.player2_right.getFxImage());
+
+
+    }
+
+    //entities.add(bomberman);
 
     @Override
     public void start(Stage Stage) throws Exception {
@@ -108,9 +134,6 @@ public class BombermanGame extends Application {
         scene.setOnKeyReleased(event -> bomberman.handleKeyReleasedEvent(event.getCode()));
     }
 
-    //entities.add(bomberman);
-
-
     public void createMap() {
         for (int i = 0; i < WIDTH; i++) {
             for (int j = 0; j < HEIGHT; j++) {
@@ -135,13 +158,14 @@ public class BombermanGame extends Application {
             flame.get(i).update();
         }
 
-        bomberman.update();
+
         for (int i = 0; i < bombs.size(); i++) {
             bombs.get(i).update();
         }
         for (int i = 0; i < enemies.size(); i++) {
             enemies.get(i).update();
         }
+        bomberman.update();
         for (int i = 0; i < block.size(); i++) {
             block.get(i).update();
         }
@@ -219,29 +243,14 @@ public class BombermanGame extends Application {
                         bomberman.setAlive(false);
                         time_number += 30;
                     }
+
                     bomberman.move();
                 } else {
                     bomberman.stay();
                 }
                 break;
             }
-            for (Enemy e : enemies ) {
 
-                if(e instanceof Kondoria) {
-                    e.move();
-                }
-
-                Rectangle Rec1 = e.getBounds();
-                if (r2.intersects(Rec1)) {
-                    if (e.getLayer() >= block.getLayer()) {
-                        e.move();
-                    } else e.stay();
-                    break;
-                }
-                if (Rec1.intersects(r1)) {
-                    bomberman.setAlive(false);
-                }
-            }
             if (!r2.intersects(r1) && block instanceof Grass) {
                 if (bomberman.getLayer() > 1) {
 
@@ -250,6 +259,24 @@ public class BombermanGame extends Application {
                         bomberman.setLayer(1);
                     }
                 }
+            }
+        }
+        for (Enemy e : enemies) {
+            Rectangle Rec1 = e.getBounds();
+            for(Entity block : block) {
+                Rectangle r2 = block.getBounds();
+                if (r2.intersects(Rec1)) {
+                    if (e.getLayer() >= block.getLayer()) {
+                        e.move();
+                    } else e.stay();
+                    break;
+                }
+            }
+        }
+        for(Enemy e : enemies) {
+            Rectangle Re = e.getBounds();
+            if(Re.intersects(r1)) {
+                bomberman.setAlive(false);
             }
         }
         if (bomberman.getCountBomb() > 1) { //thoi gian su dung BombItem
@@ -294,10 +321,8 @@ public class BombermanGame extends Application {
             for (Entity b : block) {
                 Rectangle Rb = b.getBounds();
                 if (r1.intersects(Rb) && b instanceof Brick) {
-                    Random random = new Random();
-                    int rand = random.nextInt(3);
                     b.setAlive(false);
-
+                    setGrid(b.getY() / Sprite.SCALED_SIZE, b.getX() / Sprite.SCALED_SIZE, 0);
                 }
             }
             for (int i = 1; i < bombs.size(); i++) { //xu ly bom no voi bom khac
@@ -324,28 +349,6 @@ public class BombermanGame extends Application {
                 gameOver();
             }
         }
-    }
-
-    public static void gameOver(){
-        bomberman.setAlive(false);
-        enemies.clear();
-
-        new SoundPlay("sound/just_died.wav", "died");
-
-        Image gameOver = new Image("images/art2.png");
-        author_view.setImage(gameOver);
-        root.getChildren().add(author_view);
-
-        title_screen.stop();
-        updateSound();
-
-        time_number = 120;
-        menu.updateMenu();
-        createMapLevel(level);
-        time.setText("Times: 0");
-        bomberman = new Bomber(1, 1, Sprite.player2_right.getFxImage());
-
-
     }
 
 }

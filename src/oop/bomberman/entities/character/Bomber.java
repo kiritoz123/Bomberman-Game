@@ -3,6 +3,7 @@ package oop.bomberman.entities.character;
 
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
+import oop.bomberman.Sound.SoundPlay;
 import oop.bomberman.entities.EntityList;
 import oop.bomberman.entities.block.Bomb;
 import oop.bomberman.graphics.Sprite;
@@ -154,6 +155,7 @@ public class Bomber extends character {
                 if (Bx * Sprite.SCALED_SIZE == bomb.getX() && By * Sprite.SCALED_SIZE == bomb.getY()) return;
             }//ko cho bom dat cung vi tri
             Bomb bomb = new Bomb(Bx, By, Sprite.bomb.getFxImage(), radius);
+            new SoundPlay("sound/put_bombs.wav", "putBomb");
             bombs.add(bomb);
             countBomb--;
         }

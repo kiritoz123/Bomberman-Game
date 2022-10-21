@@ -22,7 +22,7 @@ public class Astar {
         }
 
         private static boolean isUnBlocked(int[][] grid, int row, int col) {
-            return grid[row][col] == 0;
+            return grid[row][col] == 0 || grid[row][col] == 12;
         }
 
         private static boolean isDestination(int row, int col, Pair<Integer, Integer> dest) {

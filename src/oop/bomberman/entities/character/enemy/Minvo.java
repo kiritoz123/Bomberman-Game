@@ -90,13 +90,13 @@ public class Minvo extends Enemy {
                 }
             } else {
                 slow = slow > 100 ? 0 : slow + 1;
-
-                if (this.y < pair.getKey() * 32) {
-                    if (slow % 2 == 0) goDown();
-                }
                 if (this.y > pair.getKey() * 32) {
                     if (slow % 2 == 0) goUp();
                 }
+                if (this.y < pair.getKey() * 32) {
+                    if (slow % 2 == 0) goDown();
+                }
+
                 if (this.x < pair.getValue() * 32) {
                     if (slow % 2 == 0) goRight();
                 }

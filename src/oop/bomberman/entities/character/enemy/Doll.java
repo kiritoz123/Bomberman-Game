@@ -29,16 +29,8 @@ public class Doll extends Enemy{
     @Override
     public void update() {
         if(isAlive()) {
-            switch(move) {
-                case 0 :
-                    goLeft();
-                    break;
-                case 1 :
-                    goRight();
-                    break;
-                default:
-                    CreateMove();
-            }
+            if(this.move == 0) goLeft();
+            if(this.move == 1) goRight();
         } else {
             time++;
             img = Sprite.doll_dead.getFxImage();
