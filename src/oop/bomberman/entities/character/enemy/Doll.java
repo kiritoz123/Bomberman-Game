@@ -8,14 +8,12 @@ import java.util.Random;
 import static oop.bomberman.entities.EntityList.enemies;
 
 public class Doll extends Enemy{
-    private int move;
 
     public Doll(int xUnit, int yUnit, Image img) {
         super(xUnit, yUnit, img);
         setLayer(1);
-        setSpeed(3);
+        setSpeed(2);
         CreateMove();
-
     }
 
     public void CreateMove() {
@@ -31,15 +29,23 @@ public class Doll extends Enemy{
     @Override
     public void update() {
         if(isAlive()) {
-            if (move == 0) goLeft();
-            if (move == 1) goRight();
-        } else if(time < 40){
-            time ++;
+            switch(move) {
+                case 0 :
+                    goLeft();
+                    break;
+                case 1 :
+                    goRight();
+                    break;
+                default:
+                    CreateMove();
+            }
+        } else {
+            time++;
             img = Sprite.doll_dead.getFxImage();
-
-
-        }else
-            enemies.remove(this);
+            if(time > 40) {
+                enemies.remove(this);
+            }
+        }
     }
     @Override
     public void goLeft() {

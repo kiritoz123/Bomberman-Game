@@ -7,6 +7,8 @@ import oop.bomberman.entities.block.Grass;
 import oop.bomberman.entities.block.Portal;
 import oop.bomberman.entities.block.Wall;
 import oop.bomberman.entities.character.enemy.Balloom;
+import oop.bomberman.entities.character.enemy.Doll;
+import oop.bomberman.entities.character.enemy.Kondoria;
 import oop.bomberman.entities.character.enemy.Oneal;
 
 import java.io.BufferedReader;
@@ -48,7 +50,6 @@ public class CreateMap {
     public static void createMapLevel(int level) {
         EntityList.clearList();
         block.clear();
-        enemies.add(new Balloom(2, 2, Sprite.balloom_left1.getFxImage()));
         try {
             importData(gird, level);
         } catch (IOException e) {
@@ -86,10 +87,18 @@ public class CreateMap {
                         block.add(new Brick(j, i, Sprite.brick.getFxImage()));
                     }
                     if (gird[i][j] == 8) {
+                        enemies.add(new Balloom(j, i, Sprite.balloom_left1.getFxImage()));
+                    }
+                    if (gird[i][j] == 9) {
                         enemies.add(new Oneal(j,i,Sprite.oneal_left1.getFxImage()));
                     }
+                    if (gird[i][j] == 10) {
+                        enemies.add(new Doll(j,i,Sprite.doll_left1.getFxImage()));
+                    }
+                    if (gird[i][j] == 11) {
+                        enemies.add(new Kondoria(j,i,Sprite.kondoria_left1.getFxImage()));
+                    }
                 }
-
             }
         }
     }
