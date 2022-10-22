@@ -10,13 +10,14 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import oop.bomberman.BombermanGame;
 
-import static oop.bomberman.BombermanGame.*;
+import static oop.bomberman.BombermanGame.bomberman;
+import static oop.bomberman.BombermanGame.isPause;
 import static oop.bomberman.Sound.SoundPlay.is_sound_title;
 import static oop.bomberman.Sound.SoundPlay.title_screen;
 
 public class menu {
-    public static ImageView statusGame, author_view,startGame;
-    public static Text level, bomb, time;
+    public static ImageView statusGame, author_view, startGame;
+    public static Text level, time;
     public static int time_number = 120;
     public static Image pauseGame, playGame;
 
@@ -34,12 +35,10 @@ public class menu {
         time.setY(20);
 
 
-
         Image start = new Image("images/startButton.png");
         startGame = new ImageView(start);
         startGame.setX(150);
         startGame.setY(250);
-
 
 
         statusGame = new ImageView();
@@ -47,7 +46,6 @@ public class menu {
         statusGame.setY(-10);
         statusGame.setScaleX(0.5);
         statusGame.setScaleY(0.5);
-
 
 
         Image author = new Image("images/art2.png");
@@ -66,7 +64,6 @@ public class menu {
         root.getChildren().add(pane);
 
 
-
         playGame = new Image("images/pauseButton.png");
         pauseGame = new Image("images/resumeButton.png");
 
@@ -81,15 +78,14 @@ public class menu {
 
         });
         //statusGame.setImage(pauseGame);
-        statusGame.setOnMouseClicked(event-> {
+        statusGame.setOnMouseClicked(event -> {
             root.getChildren().remove(author_view);
             if (bomberman.isAlive()) {
                 title_screen.stop();
                 is_sound_title = false;
                 isPause = !isPause;
                 updateMenu();
-            }
-            else {
+            } else {
                 statusGame.setImage(playGame);
                 root.getChildren().remove(author_view);
                 isPause = true;

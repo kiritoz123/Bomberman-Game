@@ -10,7 +10,7 @@ import oop.bomberman.graphics.Sprite;
 
 import java.awt.*;
 
-import static oop.bomberman.BombermanGame.*;
+import static oop.bomberman.BombermanGame.bomberman;
 import static oop.bomberman.entities.EntityList.bombs;
 
 
@@ -103,11 +103,11 @@ public class Bomber extends character {
         if (direction == keyCode) {
             if (direction == KeyCode.LEFT || direction == KeyCode.A) {
                 img = Sprite.player2_left.getFxImage();
-                Bleft = true;
+
             }
             if (direction == KeyCode.RIGHT || direction == KeyCode.D) {
                 img = Sprite.player2_right.getFxImage();
-                Bright = true;
+
             }
             if (direction == KeyCode.UP || direction == KeyCode.W) {
                 img = Sprite.player2_up.getFxImage();

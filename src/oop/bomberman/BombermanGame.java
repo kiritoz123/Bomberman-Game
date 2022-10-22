@@ -32,13 +32,12 @@ import static oop.bomberman.graphics.CreateMap.setGrid;
 
 
 public class BombermanGame extends Application {
-    //public static int[][] id_objects = new int[15][25];
+
     public static final int animation = 3;
     public static final int WIDTH = 25;
     public static final int HEIGHT = 15;
     private static final Group root = new Group();
-    public static boolean Bright;
-    public static boolean Bleft;
+
     public static Bomber bomberman;
     public static boolean Run = true;
     public static boolean isPause;
@@ -87,7 +86,6 @@ public class BombermanGame extends Application {
 
     }
 
-    //entities.add(bomberman);
 
     @Override
     public void start(Stage Stage) throws Exception {
@@ -127,7 +125,7 @@ public class BombermanGame extends Application {
         scene.setOnKeyPressed(event -> {
             bomberman.handleKeyPressedEvent(event.getCode());
         });
-        //enemies.add(new Oneal(2,2,Sprite.oneal_dead.getFxImage()));
+
         scene.setOnKeyReleased(event -> bomberman.handleKeyReleasedEvent(event.getCode()));
     }
 
@@ -146,11 +144,7 @@ public class BombermanGame extends Application {
     }
 
     public void update() {
-        //bomberman.render(gc);
-        //entities.forEach(Entity::update);
-        //block.forEach(block::update);
 
-        //CreateMap.update();
         for (int i = 0; i < flame.size(); i++) {
             flame.get(i).update();
         }
@@ -170,17 +164,6 @@ public class BombermanGame extends Application {
         collisionFlame();
         updateSound();
 
-        /*for (int i = 0; i < flame.size(); i ++) {
-            flame.get(i).update();
-        }
-        bomberman.update();
-        handleCollisions();
-        for(int i=0; i<bombs.size(); i++) {
-            bombs.get(i).update();
-        }
-        /*CreateMap.update();
-        Bright = false;
-        Bleft = false;*/
 
     }
 
@@ -191,9 +174,7 @@ public class BombermanGame extends Application {
         for (int i = block.size() - 1; i >= 0; i--) {
             block.get(i).render(gc);
         }
-        //walls.forEach(g->g.render(gc));
-        //grasses.forEach(g->g.render(gc));
-        //bricks.forEach(g->g.render(gc));
+
 
         bombs.forEach(g -> g.render(gc));
         flame.forEach(g -> g.render(gc));
@@ -206,7 +187,7 @@ public class BombermanGame extends Application {
 
     public void handleCollisions() {
         Rectangle r1 = bomberman.getBounds();
-        //Bomber vs StillObjects
+
         for (Entity block : block) {
             Rectangle r2 = block.getBounds();
             if (r2.intersects(r1)) {
@@ -236,9 +217,10 @@ public class BombermanGame extends Application {
                         }
                     }
                     if (block instanceof Portal && enemies.size() == 0) {
-                        level++;
-                        createMapLevel(level);
+                        createMapLevel(++level);
+                        menu.level.setText("Level: " + level);
                         time_number += 30;
+                        bomberman = new Bomber(1, 1, Sprite.player2_right.getFxImage());
                         new SoundPlay("sound/level_complete.wav", "default");
                     }
 
@@ -313,7 +295,7 @@ public class BombermanGame extends Application {
                 Rectangle r2 = enemy.getBounds();
                 if (r1.intersects(r2)) {
                     enemy.setAlive(false);
-
+                    new SoundPlay("sound/dead.wav", "died");
                 }
             }
             for (Entity b : block) {

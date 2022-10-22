@@ -13,7 +13,6 @@ public class SoundPlay extends JFrame {
     public static Clip bomb_explosion;
     public static Clip died;
     public static Clip put_bomb;
-    public static boolean is_sound_died;
     public static boolean is_sound_title = false;
 
 
@@ -41,7 +40,7 @@ public class SoundPlay extends JFrame {
                 died = AudioSystem.getClip();
                 died.open(audio_input);
                 FloatControl gainControl = (FloatControl) died.getControl(FloatControl.Type.MASTER_GAIN);
-                gainControl.setValue(-1.0f);
+                gainControl.setValue(-10.0f);
                 died.start();
             }
             if (sound.equals("putBomb")) {
