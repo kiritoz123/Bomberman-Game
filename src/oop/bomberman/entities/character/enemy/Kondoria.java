@@ -92,7 +92,7 @@ public class Kondoria extends Enemy {
 
     @Override
     public void render(GraphicsContext gc) {
-        if (bomberman.isAlive()) {
+        if (bomberman.isAlive() && alive) {
             Timer count = new Timer();
             {
                 count.schedule(new TimerTask() {
