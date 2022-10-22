@@ -16,8 +16,6 @@ import static oop.bomberman.entities.EntityList.block;
 import static oop.bomberman.entities.EntityList.enemies;
 
 public class CreateMap {
-    public static int mapStartX = 0;// Coordinates of Map relative to Window.
-    public static int mapStartY = 0;
     public static int WIDTHMAP = 25;
     public static int HEIGHTMAP = 15;
 

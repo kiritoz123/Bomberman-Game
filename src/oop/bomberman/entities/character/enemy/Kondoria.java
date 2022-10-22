@@ -1,17 +1,22 @@
 package oop.bomberman.entities.character.enemy;
 
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import oop.bomberman.graphics.Sprite;
 
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static oop.bomberman.BombermanGame.bomberman;
 import static oop.bomberman.entities.EntityList.enemies;
 
-public class Kondoria extends Enemy{
+public class Kondoria extends Enemy {
+    private final int slow = 0;
+
     public Kondoria(int xUnit, int yUnit, Image img) {
         super(xUnit, yUnit, img);
-        setLayer(1);
+        setLayer(4);
         setSpeed(1);
         CreateMove();
     }
@@ -25,7 +30,7 @@ public class Kondoria extends Enemy{
     @Override
     public void goRight() {
         super.goRight();
-        img = Sprite.movingSprite(Sprite.kondoria_right1, Sprite.kondoria_right2, Sprite.kondoria_right3,animate, 10).getFxImage();
+        img = Sprite.movingSprite(Sprite.kondoria_right1, Sprite.kondoria_right2, Sprite.kondoria_right3, animate, 10).getFxImage();
     }
 
     @Override
@@ -37,7 +42,7 @@ public class Kondoria extends Enemy{
     @Override
     public void goDown() {
         super.goDown();
-        img = Sprite.movingSprite(Sprite.kondoria_right1, Sprite.kondoria_right2, Sprite.kondoria_right3,animate, 10).getFxImage();;
+        img = Sprite.movingSprite(Sprite.kondoria_right1, Sprite.kondoria_right2, Sprite.kondoria_right3, animate, 10).getFxImage();
     }
 
     @Override
@@ -59,36 +64,48 @@ public class Kondoria extends Enemy{
 
     @Override
     public void update() {
-        if(alive) {
-            if(move == 1 || Math.abs(bomberman.getY()-this.y) < 10) {
+        if (alive) {
+            if (move == 1 || Math.abs(bomberman.getY() - this.y) < 10) {
                 if (bomberman.getX() < this.x) {
                     goLeft();
                 }
                 if (bomberman.getX() > this.x) {
                     goRight();
                 }
-            } else if (move == 2 || Math.abs(bomberman.getX()-this.x) < 10) {
+            } else if (move == 2 || Math.abs(bomberman.getX() - this.x) < 10) {
                 if (bomberman.getY() > this.y) {
                     goDown();
                 }
                 if (bomberman.getY() < this.y) {
                     goUp();
                 }
-            } else {
-                stay();
-                if(Math.abs(bomberman.getY()-this.Y) < 300 && Math.abs(bomberman.getX()-this.X) < 300){
-                    speed = 2;
-                } else {
-                    speed = 1;
-                }
             }
-        }
-        else {
+        } else {
             time++;
             img = Sprite.kondoria_dead.getFxImage();
-            if(time > 40) {
+            if (time > 40) {
                 enemies.remove(this);
             }
         }
+    }
+
+
+    @Override
+    public void render(GraphicsContext gc) {
+        if (bomberman.isAlive()) {
+            Timer count = new Timer();
+            {
+                count.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        gc.drawImage(img, x, y);
+                        count.cancel();
+                    }
+                }, 50, 1);
+            }
+        } else {
+            super.render(gc);
+        }
+
     }
 }

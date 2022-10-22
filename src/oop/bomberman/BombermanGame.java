@@ -16,7 +16,6 @@ import oop.bomberman.entities.EntityList;
 import oop.bomberman.entities.block.*;
 import oop.bomberman.entities.character.Bomber;
 import oop.bomberman.entities.character.enemy.Enemy;
-import oop.bomberman.entities.character.enemy.Kondoria;
 import oop.bomberman.graphics.Sprite;
 import oop.bomberman.level.Layer;
 
@@ -37,13 +36,13 @@ public class BombermanGame extends Application {
     public static final int animation = 3;
     public static final int WIDTH = 25;
     public static final int HEIGHT = 15;
+    private static final Group root = new Group();
     public static boolean Bright;
     public static boolean Bleft;
     public static Bomber bomberman;
     public static boolean Run = true;
     public static boolean isPause;
     public static int level = 1;
-    private static final Group root = new Group();
     private final List<Entity> entities = new ArrayList<>();
     public List<Entity> Obj = new ArrayList<>();
     private long start1;
@@ -225,7 +224,7 @@ public class BombermanGame extends Application {
                             start2 = System.currentTimeMillis();
                         }
                         if (block instanceof WallItem) {
-                            bomberman.setLayer(5);
+                            bomberman.setLayer(4);
                             start3 = System.currentTimeMillis();
                         }
                         if (block instanceof SpeedItem) {
@@ -238,10 +237,11 @@ public class BombermanGame extends Application {
                             start5 = System.currentTimeMillis();
                         }
                     }
-                    if (block instanceof Portal && enemies.size() == 0) {
+                    if (block instanceof Portal) {
                         createMapLevel(++level);
-                        bomberman.setAlive(false);
+                        bomberman = new Bomber(12, 12, Sprite.player2_right.getFxImage());
                         time_number += 30;
+                        new SoundPlay("level_complete.wav", "default");
                     }
 
                     bomberman.move();
@@ -263,7 +263,7 @@ public class BombermanGame extends Application {
         }
         for (Enemy e : enemies) {
             Rectangle Rec1 = e.getBounds();
-            for(Entity block : block) {
+            for (Entity block : block) {
                 Rectangle r2 = block.getBounds();
                 if (r2.intersects(Rec1)) {
                     if (e.getLayer() >= block.getLayer()) {
@@ -273,9 +273,9 @@ public class BombermanGame extends Application {
                 }
             }
         }
-        for(Enemy e : enemies) {
+        for (Enemy e : enemies) {
             Rectangle Re = e.getBounds();
-            if(Re.intersects(r1)) {
+            if (Re.intersects(r1)) {
                 bomberman.setAlive(false);
             }
         }
