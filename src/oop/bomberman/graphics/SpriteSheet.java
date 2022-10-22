@@ -11,13 +11,13 @@ import java.net.URL;
  */
 public class SpriteSheet {
 
-    private String _path;
+    public static SpriteSheet tiles = new SpriteSheet("/textures/classic.png", 256);
+    public static SpriteSheet player = new SpriteSheet("/textures/player.png", 959);
     public final int SIZE;
     public int[] _pixels;
     public BufferedImage image;
+    private final String _path;
 
-    public static SpriteSheet tiles = new SpriteSheet("/textures/classic.png", 256);
-    public static SpriteSheet player = new SpriteSheet("/textures/player.png", 959);
     public SpriteSheet(String path, int size) {
         _path = path;
         SIZE = size;

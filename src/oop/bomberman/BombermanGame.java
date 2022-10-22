@@ -123,12 +123,10 @@ public class BombermanGame extends Application {
         time.start();
         createMapLevel(level);
         //createMap();
-
+        bomberman = new Bomber(1, 1, Sprite.player2_right.getFxImage());
         scene.setOnKeyPressed(event -> {
             bomberman.handleKeyPressedEvent(event.getCode());
         });
-        bomberman = new Bomber(1, 1, Sprite.player2_right.getFxImage());
-
         //enemies.add(new Oneal(2,2,Sprite.oneal_dead.getFxImage()));
         scene.setOnKeyReleased(event -> bomberman.handleKeyReleasedEvent(event.getCode()));
     }
@@ -237,11 +235,11 @@ public class BombermanGame extends Application {
                             start5 = System.currentTimeMillis();
                         }
                     }
-                    if (block instanceof Portal) {
-                        createMapLevel(++level);
-                        bomberman = new Bomber(12, 12, Sprite.player2_right.getFxImage());
+                    if (block instanceof Portal && enemies.size() == 0) {
+                        level++;
+                        createMapLevel(level);
                         time_number += 30;
-                        new SoundPlay("level_complete.wav", "default");
+                        new SoundPlay("sound/level_complete.wav", "default");
                     }
 
                     bomberman.move();

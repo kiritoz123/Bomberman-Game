@@ -1,8 +1,6 @@
 package oop.bomberman.Control;
 
-import javafx.event.Event;
 import javafx.scene.Group;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -11,7 +9,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import oop.bomberman.BombermanGame;
-import oop.bomberman.level.FileLevel;
 
 import static oop.bomberman.BombermanGame.*;
 import static oop.bomberman.Sound.SoundPlay.is_sound_title;

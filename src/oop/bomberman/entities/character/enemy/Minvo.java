@@ -8,7 +8,8 @@ import java.util.Random;
 
 import static oop.bomberman.BombermanGame.bomberman;
 import static oop.bomberman.entities.EntityList.enemies;
-import static oop.bomberman.entities.character.enemy.Astar.A_Star.aStarSearch;
+
+import static oop.bomberman.entities.character.enemy.Astar.aStarSearch;
 import static oop.bomberman.graphics.CreateMap.getGird;
 
 public class Minvo extends Enemy {
