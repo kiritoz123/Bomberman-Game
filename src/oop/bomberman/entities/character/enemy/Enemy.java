@@ -16,5 +16,5 @@ public abstract class Enemy extends character {
 
     public abstract void CreateMove();
 
-    public abstract void restartEnemy();
+
 }

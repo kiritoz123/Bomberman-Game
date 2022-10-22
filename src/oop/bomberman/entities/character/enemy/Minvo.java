@@ -8,7 +8,6 @@ import java.util.Random;
 
 import static oop.bomberman.BombermanGame.bomberman;
 import static oop.bomberman.entities.EntityList.enemies;
-
 import static oop.bomberman.entities.character.enemy.Astar.aStarSearch;
 import static oop.bomberman.graphics.CreateMap.getGird;
 
@@ -33,14 +32,10 @@ public class Minvo extends Enemy {
     public void CreateMove() {
         Random rand = new Random();
         move = rand.nextInt(4);
-        if(move == 1 || move == 3) setSpeed(2);
+        if (move == 1 || move == 3) setSpeed(2);
         else setSpeed(1);
     }
 
-    @Override
-    public void restartEnemy() {
-
-    }
 
     public void goLeft() {
         super.goLeft();

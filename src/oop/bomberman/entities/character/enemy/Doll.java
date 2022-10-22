@@ -7,7 +7,7 @@ import java.util.Random;
 
 import static oop.bomberman.entities.EntityList.enemies;
 
-public class Doll extends Enemy{
+public class Doll extends Enemy {
 
     public Doll(int xUnit, int yUnit, Image img) {
         super(xUnit, yUnit, img);
@@ -21,29 +21,27 @@ public class Doll extends Enemy{
         move = random.nextInt(2);
     }
 
-    @Override
-    public void restartEnemy() {
-
-    }
 
     @Override
     public void update() {
-        if(isAlive()) {
-            if(this.move == 0) goLeft();
-            if(this.move == 1) goRight();
+        if (isAlive()) {
+            if (this.move == 0) goLeft();
+            if (this.move == 1) goRight();
         } else {
             time++;
             img = Sprite.doll_dead.getFxImage();
-            if(time > 40) {
+            if (time > 40) {
                 enemies.remove(this);
             }
         }
     }
+
     @Override
     public void goLeft() {
         super.goLeft();
         img = Sprite.movingSprite(Sprite.doll_left1, Sprite.doll_left2, Sprite.doll_left3, animate++, 18).getFxImage();
     }
+
     @Override
     public void goRight() {
         super.goRight();

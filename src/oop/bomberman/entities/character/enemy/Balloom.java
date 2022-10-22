@@ -1,7 +1,6 @@
 package oop.bomberman.entities.character.enemy;
 
 import javafx.scene.image.Image;
-import oop.bomberman.graphics.CreateMap;
 import oop.bomberman.graphics.Sprite;
 
 import java.util.Random;
@@ -23,33 +22,28 @@ public class Balloom extends Enemy {
         move = rand.nextInt(4);
     }
 
-    @Override
-    public void restartEnemy() {
-
-    }
 
     @Override
     public void update() {
-        if(isAlive()) {
-            switch(move) {
-                case 0 :
+        if (isAlive()) {
+            switch (move) {
+                case 0:
                     goLeft();
                     break;
-                case 1 :
+                case 1:
                     goRight();
                     break;
-                case 2 :
+                case 2:
                     goUp();
                     break;
-                case 3 :
+                case 3:
                     goDown();
                     break;
             }
-        }
-        else {
+        } else {
             time++;
             img = Sprite.balloom_dead.getFxImage();
-            if(time > 40) {
+            if (time > 40) {
                 enemies.remove(this);
             }
         }
@@ -65,7 +59,7 @@ public class Balloom extends Enemy {
     @Override
     public void goRight() {
         super.goRight();
-        img = Sprite.movingSprite(Sprite.balloom_right1, Sprite.balloom_right2, Sprite.balloom_right3,animate, 18).getFxImage();
+        img = Sprite.movingSprite(Sprite.balloom_right1, Sprite.balloom_right2, Sprite.balloom_right3, animate, 18).getFxImage();
     }
 
     @Override
@@ -77,7 +71,7 @@ public class Balloom extends Enemy {
     @Override
     public void goDown() {
         super.goDown();
-        img = Sprite.movingSprite(Sprite.balloom_right1, Sprite.balloom_right2, Sprite.balloom_right3,animate, 18).getFxImage();;
+        img = Sprite.movingSprite(Sprite.balloom_right1, Sprite.balloom_right2, Sprite.balloom_right3, animate, 18).getFxImage();
     }
 
     @Override

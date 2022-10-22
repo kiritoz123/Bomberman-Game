@@ -57,10 +57,6 @@ public class Kondoria extends Enemy {
         move = rand.nextInt(4);
     }
 
-    @Override
-    public void restartEnemy() {
-
-    }
 
     @Override
     public void update() {

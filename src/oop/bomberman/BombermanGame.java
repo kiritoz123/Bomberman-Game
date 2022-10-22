@@ -220,7 +220,7 @@ public class BombermanGame extends Application {
                         createMapLevel(++level);
                         menu.level.setText("Level: " + level);
                         time_number += 30;
-                        bomberman = new Bomber(1, 1, Sprite.player2_right.getFxImage());
+                        bomberman.setAlive(false);
                         new SoundPlay("sound/level_complete.wav", "default");
                     }
 

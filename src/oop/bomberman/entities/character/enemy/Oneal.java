@@ -68,10 +68,5 @@ public class Oneal extends Enemy {
 
     }
 
-    @Override
-    public void restartEnemy() {
-
-    }
-
 
 }
