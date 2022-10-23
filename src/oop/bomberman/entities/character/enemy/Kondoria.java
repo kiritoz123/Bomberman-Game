@@ -54,7 +54,7 @@ public class Kondoria extends Enemy {
     @Override
     public void CreateMove() {
         Random rand = new Random();
-        move = rand.nextInt(4);
+        move = rand.nextInt(2);
     }
 
 
@@ -68,7 +68,7 @@ public class Kondoria extends Enemy {
                 if (bomberman.getX() > this.x) {
                     goRight();
                 }
-            } else if (move == 2 || Math.abs(bomberman.getX() - this.x) < 10) {
+            } else if (move == 0 || Math.abs(bomberman.getX() - this.x) < 10) {
                 if (bomberman.getY() > this.y) {
                     goDown();
                 }
@@ -97,7 +97,7 @@ public class Kondoria extends Enemy {
                         gc.drawImage(img, x, y);
                         count.cancel();
                     }
-                }, 50, 1);
+                }, 500, 1);
             }
         } else {
             super.render(gc);
