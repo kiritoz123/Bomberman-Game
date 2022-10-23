@@ -4,7 +4,8 @@ package oop.bomberman.entities;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-
+import oop.bomberman.entities.character.Bomber;
+import oop.bomberman.entities.character.character;
 import oop.bomberman.graphics.Sprite;
 
 import java.awt.*;
@@ -62,6 +63,7 @@ public abstract class Entity {
     public Rectangle getBounds() {
         return new Rectangle(x, y, Sprite.SCALED_SIZE, Sprite.SCALED_SIZE);
     }
+
     public Rectangle2D getRect() {
         return new Rectangle2D(x, y, Sprite.SCALED_SIZE, Sprite.SCALED_SIZE);
     }
@@ -86,6 +88,18 @@ public abstract class Entity {
     public void render(GraphicsContext gc) {
         gc.drawImage(img, x, y);
     }
+
     public abstract void update();
+
+    public boolean pass(character e) {
+        Rectangle r1 = getBounds();
+        Rectangle r2;
+        if (e instanceof Bomber bomber) {
+            r2 = new Rectangle(bomber.getX() + 4, bomber.getY() + 4, Sprite.SCALED_SIZE * 3 / 4, Sprite.SCALED_SIZE * 3 / 4);
+        } else {
+            r2 = new Rectangle(e.getX(), e.getY(), Sprite.SCALED_SIZE, Sprite.SCALED_SIZE);
+        }
+        return !r1.intersects(r2);
+    }
 
 }

@@ -5,14 +5,13 @@ import javafx.scene.image.Image;
 import oop.bomberman.graphics.Sprite;
 
 import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import static oop.bomberman.BombermanGame.bomberman;
 import static oop.bomberman.entities.EntityList.enemies;
 
 public class Kondoria extends Enemy {
-    private final int slow = 0;
+    private int slow = 0;
+    private int slow2 = 0;
 
     public Kondoria(int xUnit, int yUnit, Image img) {
         super(xUnit, yUnit, img);
@@ -24,25 +23,25 @@ public class Kondoria extends Enemy {
     @Override
     public void goLeft() {
         super.goLeft();
-        img = Sprite.movingSprite(Sprite.kondoria_left1, Sprite.kondoria_left2, Sprite.kondoria_left3, animate, 10).getFxImage();
+        img = Sprite.movingSprite(Sprite.kondoria_left1, Sprite.kondoria_left2, Sprite.kondoria_left3, animate++, 20).getFxImage();
     }
 
     @Override
     public void goRight() {
         super.goRight();
-        img = Sprite.movingSprite(Sprite.kondoria_right1, Sprite.kondoria_right2, Sprite.kondoria_right3, animate, 10).getFxImage();
+        img = Sprite.movingSprite(Sprite.kondoria_right1, Sprite.kondoria_right2, Sprite.kondoria_right3, animate++, 20).getFxImage();
     }
 
     @Override
     public void goUp() {
         super.goUp();
-        img = Sprite.movingSprite(Sprite.kondoria_left1, Sprite.kondoria_left2, Sprite.kondoria_left3, animate++, 10).getFxImage();
+        img = Sprite.movingSprite(Sprite.kondoria_left1, Sprite.kondoria_left2, Sprite.kondoria_left3, animate++, 20).getFxImage();
     }
 
     @Override
     public void goDown() {
         super.goDown();
-        img = Sprite.movingSprite(Sprite.kondoria_right1, Sprite.kondoria_right2, Sprite.kondoria_right3, animate, 10).getFxImage();
+        img = Sprite.movingSprite(Sprite.kondoria_right1, Sprite.kondoria_right2, Sprite.kondoria_right3, animate++, 20).getFxImage();
     }
 
     @Override
@@ -54,28 +53,21 @@ public class Kondoria extends Enemy {
     @Override
     public void CreateMove() {
         Random rand = new Random();
-        move = rand.nextInt(2);
+        move = rand.nextInt(4);
     }
 
 
     @Override
     public void update() {
         if (alive) {
-            if (move == 1 || Math.abs(bomberman.getY() - this.y) < 10) {
-                if (bomberman.getX() < this.x) {
-                    goLeft();
-                }
-                if (bomberman.getX() > this.x) {
-                    goRight();
-                }
-            } else if (move == 0 || Math.abs(bomberman.getX() - this.x) < 10) {
-                if (bomberman.getY() > this.y) {
-                    goDown();
-                }
-                if (bomberman.getY() < this.y) {
-                    goUp();
-                }
+            slow = slow > 1000 ? 0 : slow + 1;
+            if (slow % 10 == 0) {
+                CreateMove();
             }
+            if (move == 0) goLeft();
+            if (move == 1) goRight();
+            if (move == 2) goUp();
+            if (move == 3) goDown();
         } else {
             time++;
             img = Sprite.kondoria_dead.getFxImage();
@@ -88,17 +80,23 @@ public class Kondoria extends Enemy {
 
     @Override
     public void render(GraphicsContext gc) {
-        if (bomberman.isAlive() && alive) {
-            Timer count = new Timer();
-            {
-                count.schedule(new TimerTask() {
-                    @Override
-                    public void run() {
+        if ((Math.abs(bomberman.getX() - this.x) > 64 || Math.abs(bomberman.getY() - this.y) > 64) && isAlive()) {
+            slow2 = slow2 > 2000 ? 0 : slow2 + 1;
+            if (slow2 % 500 == 0 || slow2 % 501 == 0 || slow2 % 502 == 0 || slow2 % 503 == 0
+                    || slow2 % 504 == 0 || slow2 % 505 == 0) {
+                try {
+                    try {
                         gc.drawImage(img, x, y);
-                        count.cancel();
+                    } catch (InternalError e) {
+                        System.out.println("Exception");
                     }
-                }, 500, 1);
+
+                } catch (NullPointerException | InternalError e) {
+                    System.out.println("Exception");
+                }
             }
+
+
         } else {
             super.render(gc);
         }

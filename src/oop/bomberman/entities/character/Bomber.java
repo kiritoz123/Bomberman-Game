@@ -22,13 +22,12 @@ public class Bomber extends character {
     private KeyCode direction = null;
     private int time = 0;
     private int radius;
-    private int power;
+
 
     public Bomber(int x, int y, Image img) {
         super(x, y, img);
         setLayer(1);
         setSpeed(2); //set speed
-        setPower(1);
         setRadius(1); // set khoang no bom
         setCountBomb(1);
     }
@@ -159,15 +158,6 @@ public class Bomber extends character {
             bombs.add(bomb);
             countBomb--;
         }
-    }
-
-
-    public int getPower() {
-        return power;
-    }
-
-    public void setPower(int power) {
-        this.power = power;
     }
 
 

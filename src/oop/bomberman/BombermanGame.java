@@ -33,7 +33,7 @@ import static oop.bomberman.graphics.CreateMap.setGrid;
 
 public class BombermanGame extends Application {
 
-    public static final int animation = 3;
+
     public static final int WIDTH = 25;
     public static final int HEIGHT = 15;
     private static final Group root = new Group();
@@ -223,11 +223,19 @@ public class BombermanGame extends Application {
                         bomberman.setAlive(false);
                         new SoundPlay("sound/level_complete.wav", "default");
                     }
-
-                    bomberman.move();
+                    Run = true;
                 } else {
-                    bomberman.stay();
+                    Run = false;
                 }
+                for (Bomb bomb : bombs) {
+                    Rectangle r3 = bomb.getBounds();
+                    if (bomb.pass(bomberman) && r1.intersects(r3)) {
+                        Run = false;
+                        break;
+                    }
+                }
+                if (Run) bomberman.move();
+                else bomberman.stay();
                 break;
             }
 
@@ -238,6 +246,16 @@ public class BombermanGame extends Application {
                     if (elapsedTimeMillis3 > 10000) {
                         bomberman.setLayer(1);
                     }
+                }
+            }
+        }
+        for (Enemy enemy : enemies) {
+            Rectangle Re = enemy.getBounds();
+            for (Bomb bomb : bombs) {
+                Rectangle r = bomb.getBounds();
+                if (bomb.pass(enemy) && Re.intersects(r)) {
+                    enemy.stay();
+                    break;
                 }
             }
         }
@@ -253,6 +271,8 @@ public class BombermanGame extends Application {
                 }
             }
         }
+
+
         for (Enemy e : enemies) {
             Rectangle Re = e.getBounds();
             if (Re.intersects(r1)) {
