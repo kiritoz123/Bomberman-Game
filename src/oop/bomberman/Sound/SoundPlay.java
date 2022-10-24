@@ -5,9 +5,6 @@ import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
 
-import static oop.bomberman.BombermanGame.bomberman;
-import static oop.bomberman.BombermanGame.isPause;
-
 public class SoundPlay extends JFrame {
     public static Clip title_screen;
     public static Clip bomb_explosion;

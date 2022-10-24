@@ -6,14 +6,12 @@ import oop.bomberman.entities.block.Brick;
 import oop.bomberman.entities.block.Grass;
 import oop.bomberman.entities.block.Portal;
 import oop.bomberman.entities.block.Wall;
-import oop.bomberman.entities.character.Bomber;
 import oop.bomberman.entities.character.enemy.*;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-import static oop.bomberman.BombermanGame.bomberman;
 import static oop.bomberman.entities.EntityList.block;
 import static oop.bomberman.entities.EntityList.enemies;
 

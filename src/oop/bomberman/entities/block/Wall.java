@@ -4,7 +4,6 @@ import javafx.scene.image.Image;
 import oop.bomberman.entities.Entity;
 
 import static oop.bomberman.BombermanGame.HEIGHT;
-import static oop.bomberman.BombermanGame.WIDTH;
 import static oop.bomberman.graphics.CreateMap.WIDTHMAP;
 
 public class Wall extends Entity {
