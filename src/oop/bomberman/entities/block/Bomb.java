@@ -10,7 +10,6 @@ public class Bomb extends Entity {
 
     public Bomb(int xUnit, int yUnit, Image img, int radius) {
         super(xUnit, yUnit, img);
-        setLayer(2);
         this.radius = radius;
     }
 

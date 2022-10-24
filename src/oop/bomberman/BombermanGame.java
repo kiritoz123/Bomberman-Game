@@ -42,6 +42,8 @@ public class BombermanGame extends Application {
     public static boolean Run = true;
     public static boolean isPause;
     public static int level = 1;
+    private static GraphicsContext gc;
+    private static Canvas canvas;
     private final List<Entity> entities = new ArrayList<>();
     public List<Entity> Obj = new ArrayList<>();
     private long start1;
@@ -55,8 +57,6 @@ public class BombermanGame extends Application {
     private long elapsedTimeMillis4;
     private long elapsedTimeMillis5;
     private boolean flamePass = false;
-    private GraphicsContext gc;
-    private Canvas canvas;
     private long last_time;
 
     public static void main(String[] args) {
@@ -86,6 +86,9 @@ public class BombermanGame extends Application {
 
     }
 
+    public static void moveCamera(int x, int y) {
+        gc.translate(-x, -y);
+    }
 
     @Override
     public void start(Stage Stage) throws Exception {

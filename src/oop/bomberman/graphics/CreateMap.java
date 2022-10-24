@@ -6,17 +6,19 @@ import oop.bomberman.entities.block.Brick;
 import oop.bomberman.entities.block.Grass;
 import oop.bomberman.entities.block.Portal;
 import oop.bomberman.entities.block.Wall;
+import oop.bomberman.entities.character.Bomber;
 import oop.bomberman.entities.character.enemy.*;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
+import static oop.bomberman.BombermanGame.bomberman;
 import static oop.bomberman.entities.EntityList.block;
 import static oop.bomberman.entities.EntityList.enemies;
 
 public class CreateMap {
-    public static int WIDTHMAP = 25;
+    public static int WIDTHMAP = 31;
     public static int HEIGHTMAP = 15;
 
     private static final int[][] gird = new int[HEIGHTMAP][WIDTHMAP];
@@ -99,6 +101,7 @@ public class CreateMap {
                     if(gird[i][j] == 13) {
                         block.add(new Brick(j,i,Sprite.brick.getFxImage()));
                     }
+
                 }
             }
         }
