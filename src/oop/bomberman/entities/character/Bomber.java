@@ -36,6 +36,10 @@ public class Bomber extends character {
         setCountBomb(1);
     }
 
+    public int getTrace() {
+        return trace;
+    }
+
     public int getCountBomb() {
         return countBomb;
     }
@@ -141,6 +145,7 @@ public class Bomber extends character {
         img = Sprite.movingSprite(Sprite.player2_left, Sprite.player2_left_1, Sprite.player2_left_2, animate++, 20).getFxImage();
 
     }
+
     @Override
     public void goRight() {
         int camera = 0;

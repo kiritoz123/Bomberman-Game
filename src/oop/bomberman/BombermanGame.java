@@ -67,7 +67,7 @@ public class BombermanGame extends Application {
     public static void gameOver() {
         bomberman.setAlive(false);
         enemies.clear();
-
+        BombermanGame.moveCamera(-bomberman.getTrace(), 0);
         new SoundPlay("sound/just_died.wav", "died");
 
         Image gameOver = new Image("images/art2.png");

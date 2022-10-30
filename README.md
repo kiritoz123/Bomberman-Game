@@ -1,3 +1,8 @@
+## Giới thiệu 
+Trong bài tập lớn này là viết một phiên bản Java mô phỏng lại trò chơi [Bomberman](https://www.youtube.com/watch?v=mKIOVwqgSXM) kinh điển của NES.
+
+<img src="res/demo.png" alt="drawing" width="722"/>
+
 ## Mô tả về các đối tượng trong trò chơi
 - ![](res/sprites/player_down.png) *Bomber* là nhân vật chính của trò chơi. Bomber có thể di chuyển theo 4 hướng trái/phải/lên/xuống theo sự điều khiển của người chơi.
 - ![](res/sprites/balloom_left1.png) *Enemy* là các đối tượng mà Bomber phải tiêu diệt hết để có thể qua Level. Enemy có thể di chuyển ngẫu nhiên hoặc tự đuổi theo Bomber tùy theo loại Enemy. Các loại Enemy sẽ được mô tả cụ thể ở phần dưới.
@@ -15,10 +20,15 @@ Các *Item* cũng được giấu phía sau Brick và chỉ hiện ra khi Brick 
 - ![](res/sprites/powerup_speed.png) *SpeedItem* Khi sử dụng Item này, Bomber sẽ được tăng vận tốc di chuyển thêm một giá trị thích hợp
 - ![](res/sprites/powerup_flames.png) *FlameItem* Item này giúp tăng phạm vi ảnh hưởng của Bomb khi nổ (độ dài các Flame lớn hơn)
 - ![](res/sprites/powerup_bombs.png) *BombItem* Thông thường, nếu không có đối tượng Bomb nào đang trong trạng thái kích hoạt, Bomber sẽ được đặt và kích hoạt duy nhất một đối tượng Bomb. Item này giúp tăng số lượng Bomb có thể đặt thêm một.
+- ![](res/sprites/powerup_wallpass.png) *Wallpass* Item này giúp nhân vật có khả năng đi xuyên tường
+- ![](res/sprites/powerup_flamepass.png) *FlamePass* item này giúp nhân vật không bị chết khi va chạm với bomb nổ
 
 Có nhiều loại Enemy trong Bomberman, tuy nhiên trong phiên bản này chỉ yêu cầu cài đặt hai loại Enemy dưới đây (nếu cài đặt thêm các loại khác sẽ được cộng thêm điểm):
 - ![](res/sprites/balloom_left1.png) *Balloom* là Enemy đơn giản nhất, di chuyển ngẫu nhiên với vận tốc cố định
 - ![](res/sprites/oneal_left1.png) *Oneal* có tốc độ di chuyển thay đổi, lúc nhanh, lúc chậm và di chuyển "thông minh" hơn so với Balloom (biết đuổi theo Bomber)
+- ![](res/sprites/doll_left1.png) *Doll* di chuyển với tốc độ nhanh theo trái , phải
+- ![](res/sprites/kondoria_left1.png) *Kondoria* có khả năng tàng hình , đi xuyên tường.
+- ![](res/sprites/minvo_left1.png) *Minvo* di chuyển thông minh theo nhân vật với thuật toán tìm đường đi ngắn nhất
 
 ## Mô tả game play, xử lý va chạm và xử lý bom nổ
 - Trong một màn chơi, Bomber sẽ được người chơi di chuyển, đặt và kích hoạt Bomb với mục tiêu chính là tiêu diệt tất cả Enemy và tìm ra vị trí Portal để có thể qua màn mới
@@ -33,5 +43,10 @@ Có nhiều loại Enemy trong Bomberman, tuy nhiên trong phiên bản này ch�
 - Sử dụng các phím mũi tên hoặc các phím W, A, S, D để điều khiển *Bomber* ![](res/sprites/player_down.png) di chuyển trên bản đồ.
 - Phím SPACE được sử dụng để đặt bom
 
+## UML 
+![](res/sprites/uml2.png)
+
 ## Mục tiêu của game
 - Điều khiên Bomber đặt bom để tiêu diệt hết quái trên toàn bản đồ, sau khi tiêu diệt hết quái ta sẽ đi tìm cánh cổng ![](res/sprites/portal.png) *Portal* trong các bức tường ![](res/sprites/brick.png) *Brick*, di chuyển Bomber vào cánh cổng ![](res/sprites/portal.png) *Portal* để di chuyển sang màn chơi mới.
+  
+
